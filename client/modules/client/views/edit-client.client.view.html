@@ -1,9 +1,100 @@
-<section>
-	<div class="row">
-		<div class="col-xs-8 col-xs-offset-2 secure-view">
-			<i class="mdi-action-https"></i>
-			<h1>This is a secure view!!</h1>
-			<a href="#/" class="btn btn-default">HOME</a>
-		</div>
-	</div>
+<section ng-controller="ClientCtrl as vm" ng-init="vm.findOne()">
+  <!-- Header -->
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="header">
+        <h3 class="title"><i class="fa fa-edit"></i>Editar cliente</h3>
+      </div>
+    </div>
+  </div>
+  <!-- Alert Error/Success -->
+  <div class="row">
+    <div class="col-xs-12">
+      <div ng-show="vm.errorInfo.msg" class="alert alert-danger" role="alert">
+        <p><strong>
+          Error:
+        </strong> {{vm.errorInfo.msg}}</p>
+      </div>
+      <div ng-show="vm.successInfo.msg" class="alert alert-success" role="alert">
+        <p><strong>
+          {{vm.successInfo.msg}}
+        </strong></p>
+        <p>Cliente: {{vm.successInfo.data.firstName}} {{vm.successInfo.data.lastName}}</p>
+        <p>Número: {{vm.successInfo.data.number}}</p>
+      </div>
+    </div>
+  </div>
+  <!-- Client Form -->
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="card">
+        <div class="content">
+          <div class="row">
+            <form name='editClient' role='form' ng-submit="vm.update(editClient)">
+              <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                  <label for="number">Número</label>
+                  <input type="number" class="form-control" disabled="true" id="number" placeholder="número de cliente" required="true" ng-model="vm.clientModel.number"
+                  ng-pattern="/^[0-9]/" step="1" / >
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                  <label for="dni">DNI</label>
+                  <input type="number" class="form-control" id="dni" placeholder="número de documento" ng-model="vm.clientModel.dni" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="1">
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                  <label for="firstname">Nombre</label>
+                  <input type="text" class="form-control" id="firstname" placeholder="nombre del cliente" required="true" ng-model="vm.clientModel.firstName">
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                  <label for="lastname">Apellido</label>
+                  <input type="text" class="form-control" id="lastname" placeholder="apellido del cliente" required="true" ng-model="vm.clientModel.lastName">
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                  <label for="phone">Teléfono</label>
+                  <input type="text" class="form-control" id="phone" placeholder="número de tel fijo" ng-model="vm.clientModel.phone">
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                  <label for="cellphone">Celular</label>
+                  <input type="text" class="form-control" id="cellphone" placeholder="número de celular" ng-model="vm.clientModel.cellphone">
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                  <label for="state">Provincia</label>
+                  <input type="text" class="form-control" id="state" placeholder="provincia (Mendoza)" required="true" ng-model="vm.clientModel.state">
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                  <label for="city">Ciudad</label>
+                  <input type="text" class="form-control" id="city" placeholder="ciudad (Rivadavia, Junin)" required="true" ng-model="vm.clientModel.city">
+                </div>
+              </div>
+              <div class="col-xs-12">
+                <div class="form-group">
+                  <label for="address">Dirección</label>
+                  <input type="text" class="form-control" id="address" placeholder="dirección (Calle, barrio)" required="true" ng-model="vm.clientModel.address">
+                </div>
+              </div>
+              <div class="col-xs-12">
+                <div class="form-group">
+                  <button type="submit" class="btn btn-success btn-fill pull-right">Guardar cambios</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>

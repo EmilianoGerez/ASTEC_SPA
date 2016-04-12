@@ -1,10 +1,8 @@
-function ClientCtrl(Clients, $http, $window, $stateParams) {
+function OrderCtrl(Orders, Clients, $http, $window, $stateParams) {
   var vm = this;
 
-  var masterModel;
-
-  vm.clientModel = {};
-  vm.clientSearch = {};
+  vm.orderModel = {};
+  vm.orderSearch = {};
   vm.errorInfo = {
     msg: null,
     data: null
@@ -13,18 +11,32 @@ function ClientCtrl(Clients, $http, $window, $stateParams) {
     msg: null,
     data: null
   };
+  vm.solvedOpt = ['No', 'Si'];
+  vm.orderStatus = ['Cancelada', 'Asignada', 'Completada'];
 
   vm.create = function(form) {
-    var newClient = new Clients.api(vm.clientModel);
+    // hardcode attr
+    vm.orderModel.client = vm.clientData._id;
+    // TODO
+    vm.orderModel.tech = {
+      id: '1',
+      firstName: 'Jesie',
+      lastName: 'Pinkman'
+    };
 
-    newClient.$save(function(res) {
+    var neworder = new Orders.api(vm.orderModel);
+
+    neworder.$save(function(res) {
       //reset form
-      angular.copy(masterModel, vm.clientModel);
+      vm.orderModel = {};
+      vm.clientData = null;
+      vm.clientSearch = {};
+      vm.clientList = null;
       form.$setPristine();
       form.$setUntouched();
       //alert
       vm.errorInfo.msg = null;
-      vm.successInfo.msg = 'Cliente creado con exito';
+      vm.successInfo.msg = 'Orden creada con exito';
       vm.successInfo.data = res;
     }, function(err) {
       //alert
@@ -33,43 +45,60 @@ function ClientCtrl(Clients, $http, $window, $stateParams) {
     });
   };
 
-  vm.search = function() {
+  vm.searchClient = function() {
     if (vm.clientSearch.number) {
       vm.searchWord = vm.clientSearch.number;
-      getClient(vm.clientSearch.number, 'null');
+      getclient(vm.clientSearch.number, 'null');
     } else if (vm.clientSearch.lastName) {
       vm.searchWord = vm.clientSearch.lastName;
-      getClient('null', vm.clientSearch.lastName);
+      getclient('null', vm.clientSearch.lastName);
     }
   };
 
-  vm.remove = function(client) {
-    var confirm = $window.confirm('Quieres eliminar a ' + client.firstName + ' ' + client.lastName + ' ?');
+  vm.searchOrder = function() {
+    if (vm.orderSearch.number) {
+      vm.searchWord = vm.orderSearch.number;
+      getorder(vm.orderSearch.number, 'null');
+    } else if (vm.orderSearch.lastName) {
+      vm.searchWord = vm.orderSearch.lastName;
+      getorder('null', vm.orderSearch.lastName);
+    }
+  };
+
+  vm.remove = function(order) {
+    var confirm = $window.confirm('Quieres eliminar a ' + order.firstName + ' ' + order.lastName + ' ?');
 
     if (confirm) {
-      client.$remove();
-        // vm.clientList = vm.clientList.filter(function(e) {
-        //   return e._id !== client._id;
-        // });
+      order.$remove();
+      // vm.orderList = vm.orderList.filter(function(e) {
+      //   return e._id !== order._id;
+      // });
     }
   };
 
   vm.findOne = function() {
-    Clients.api.get({
+    Orders.api.get({
       id: $stateParams.id
     }, function(response) {
-      vm.clientModel = response;
+      vm.orderModel = response;
     });
   };
 
-  vm.update = function(form){
-    vm.clientModel.$update(function(res) {
+  vm.update = function(form) {
+    // TODO
+    vm.orderModel.tech = {
+      id: '1',
+      firstName: 'Walter',
+      lastName: 'White'
+    };
+
+    vm.orderModel.$update(function(res) {
       //reset form
       form.$setPristine();
       form.$setUntouched();
       //alert
       vm.errorInfo.msg = null;
-      vm.successInfo.msg = 'Cliente editado con exito';
+      vm.successInfo.msg = 'Orden editada con éxito';
       vm.successInfo.data = res;
     }, function(err) {
       //alert
@@ -79,21 +108,31 @@ function ClientCtrl(Clients, $http, $window, $stateParams) {
   };
 
   // functon helpers (private)
-  function getClient(number, lastName) {
+  function getclient(number, lastName) {
     Clients.search.query({
       'id': null,
       'number': number,
       'lastName': lastName
-    }, function(response){
+    }, function(response) {
       vm.clientList = response;
-    });  
+    });
+  }
+
+  function getorder(number, lastName) {
+    Orders.search.query({
+      'id': null,
+      'number': number,
+      'lastName': lastName
+    }, function(response) {
+      vm.orderList = response;
+    });
   }
 
 }
 
 angular
-  .module('client')
-  .controller('ClientCtrl', ['Clients', '$http', '$window', '$stateParams', ClientCtrl]);
+  .module('order')
+  .controller('OrderCtrl', ['Orders', 'Clients', '$http', '$window', '$stateParams', OrderCtrl]);
 // angular.module('user')
 //   .directive('recordAvailabilityValidator', ['$http', 'Users', function($http, Users) {
 

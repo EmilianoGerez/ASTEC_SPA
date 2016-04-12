@@ -3404,7 +3404,7 @@ body {
 .header {
   padding-bottom: 20px;
 }
-.header .title  i {
+h2,h3 >  i {
     margin-right: 20px;
 }
 
@@ -3418,10 +3418,19 @@ body {
   padding-bottom: 15px;
 }
 
+.client-card, .col-sm-4, .col-sm-5, .col-sm-3{
+  padding-right: 0px;
+}
+
 .search-order {
   margin-bottom: 15px;
 }
 
 .order-detail h4{
   margin: 0px;
+}
+
+/* home view styles*/
+.home-wrapper {
+ 
 }

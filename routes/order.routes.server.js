@@ -11,8 +11,8 @@ router.get('/:id', controller.findOne);
 // list pendig orders
 router.get('/', controller.findAll);
 // remove
-router.delete('/:id', controller.remove);
-// search
-router.post('/search', controller.findBySearch);
+router.delete('/:id/search/:number/:lastName', controller.remove);
+// search (send one params set to null)
+router.get('/search/:number/:lastName', controller.findBySearch);
 
 module.exports = router;

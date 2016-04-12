@@ -1,7 +1,7 @@
 //Articles service used for communicating with the articles REST endpoints
-angular.module('client').factory('Clients', ['$resource', function($resource) {
+angular.module('order').factory('Orders', ['$resource', function($resource) {
 
-	var api = $resource('api/clients/:id', {
+	var api = $resource('api/orders/:id', {
 		id: '@_id'
 	}, {
 		update: {
@@ -9,7 +9,7 @@ angular.module('client').factory('Clients', ['$resource', function($resource) {
 		}
 	});
 
-	var search = $resource('api/clients/:id/search/:number/:lastName', {
+	var search = $resource('api/orders/:id/search/:number/:lastName', {
 		id: '@_id',
 		number: 'number',
 		lastName: 'lastName'

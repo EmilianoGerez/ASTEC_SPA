@@ -34,7 +34,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'client')));
 
-
 // Routes and routes middleware
 var routes = require('./routes/index');
 var users = require('./routes/users');

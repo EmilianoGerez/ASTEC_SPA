@@ -1,53 +1,25 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <!-- <base href="/"> -->
     <title><%= title %></title>
-    <!-- CSS LIBS -->
-    <!-- Bootsrap -->
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
-    <!--     Fonts and icons     -->
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
-    <!-- CSS FILES -->
-    <link rel="stylesheet" href="assets/css/light.css">
+    <% include partials/_css-libs.ejs %>
     
   </head>
   <body ng-app="main" ng-cloak>
-    <div class="wrapper">
-    <% include menu.ejs %>
-      <div class="content">
-        <div class="container-fluid">
-          <div data-ui-view></div>
+    <div ng-controller="mainCtrl as main">
+      <div class="wrapper">
+        <% include partials/_menu.ejs %>
+        <div class="content">
+          <div class="container-fluid">
+            <div data-ui-view>
+              
+            </div>
+          </div>
         </div>
+        <% include partials/_footer.ejs %>
       </div>
-    <% include footer.ejs %>
-  </div>
-
-  <!-- JS LIBS -->
-  <!-- Jquery -->
-  <script src="bower_components/jquery/dist/jquery.min.js"></script>
-  <!-- Bootstrap -->
-  <link rel="stylesheet" href="bower_components/bootstrap/dist/js/bootstrap.min.js">
-  <!-- Angular -->
-  <script src="bower_components/angular/angular.min.js"></script>
-  <script src="bower_components/angular-resource/angular-resource.min.js"></script>
-  <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
-  <script src="bower_components/angular-jwt/dist/angular-jwt.js"></script>
-  <script src="bower_components/a0-angular-storage/dist/angular-storage.js"></script>
-  <script src="bower_components/angular-messages/angular-messages.js"></script>
-  
-  <!-- JS FILES -->
-  <script src="assets/js/light.js"></script>
-  <!-- Angular Files -->
-  <script src="dist/angular/compress.min.js"></script>
-  <!-- Error Message -->
-  <script type="text/ng-template" id="form-messages">
-  <div ng-message="required">Required</div>
-  <div ng-message="minlength">Too short</div>
-  <div ng-message="maxlength">Too long</div>
-  <div ng-message="email">Invalid email address</div>
-  <div ng-message="compareTo">Must match the previous entry</div>
-  <div ng-message="recordAvailable">The name is already in use...</div>
-  </script>
-</body>
+    </div>
+    <% include partials/_js-libs.ejs %>
+  </body>
 </html>

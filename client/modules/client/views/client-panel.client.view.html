@@ -10,17 +10,17 @@
   <!-- Alert Error/Success -->
   <div class="row">
     <div class="col-xs-12">
-    <div ng-show="vm.fns.errorInfo.msg" class="alert alert-danger" role="alert">
+      <div ng-show="vm.errorInfo.msg" class="alert alert-danger" role="alert">
         <p><strong>
           Error:
-        </strong> {{vm.fns.errorInfo.msg}}</p>
+        </strong> {{vm.errorInfo.msg}}</p>
       </div>
-      <div ng-show="vm.fns.successInfo.msg" class="alert alert-success" role="alert">
+      <div ng-show="vm.successInfo.msg" class="alert alert-success" role="alert">
         <p><strong>
-          {{vm.fns.successInfo.msg}}
+          {{vm.successInfo.msg}}
         </strong></p>
-        <p>Cliente: {{vm.fns.successInfo.data.firstName}} {{vm.fns.successInfo.data.lastName}}</p>
-        <p>Número: {{vm.fns.successInfo.data.number}}</p>
+        <p>Cliente: {{vm.successInfo.data.firstName}} {{vm.successInfo.data.lastName}}</p>
+        <p>Número: {{vm.successInfo.data.number}}</p>
       </div>
     </div>
   </div>
@@ -30,61 +30,61 @@
       <div class="card">
         <div class="content">
           <div class="row">
-            <form name='createClient' role='form' ng-submit="vm.fns.create()">
+            <form name='createClient' role='form' ng-submit="vm.create(createClient)">
               <div class="col-xs-12 col-sm-6">
                 <div class="form-group">
                   <label for="number">Número</label>
-                  <input type="number" class="form-control" id="number" placeholder="número de cliente" required="true" ng-model="vm.fns.clientModel.number"
+                  <input type="number" class="form-control" id="number" placeholder="número de cliente" required="true" ng-model="vm.clientModel.number"
                   ng-pattern="/^[0-9]/" step="1" / >
                 </div>
               </div>
               <div class="col-xs-12 col-sm-6">
                 <div class="form-group">
                   <label for="dni">DNI</label>
-                  <input type="number" class="form-control" id="dni" placeholder="número de documento" ng-model="vm.fns.clientModel.dni" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="1">
+                  <input type="number" class="form-control" id="dni" placeholder="número de documento" ng-model="vm.clientModel.dni" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="1">
                 </div>
               </div>
               <div class="col-xs-12 col-sm-6">
                 <div class="form-group">
                   <label for="firstname">Nombre</label>
-                  <input type="text" class="form-control" id="firstname" placeholder="nombre del cliente" required="true" ng-model="vm.fns.clientModel.firstName">
+                  <input type="text" class="form-control" id="firstname" placeholder="nombre del cliente" required="true" ng-model="vm.clientModel.firstName">
                 </div>
               </div>
               <div class="col-xs-12 col-sm-6">
                 <div class="form-group">
                   <label for="lastname">Apellido</label>
-                  <input type="text" class="form-control" id="lastname" placeholder="apellido del cliente" required="true" ng-model="vm.fns.clientModel.lastName">
+                  <input type="text" class="form-control" id="lastname" placeholder="apellido del cliente" required="true" ng-model="vm.clientModel.lastName">
                 </div>
               </div>
               <div class="col-xs-12 col-sm-6">
                 <div class="form-group">
                   <label for="phone">Teléfono</label>
-                  <input type="text" class="form-control" id="phone" placeholder="número de tel fijo" ng-model="vm.fns.clientModel.phone">
+                  <input type="text" class="form-control" id="phone" placeholder="número de tel fijo" ng-model="vm.clientModel.phone">
                 </div>
               </div>
               <div class="col-xs-12 col-sm-6">
                 <div class="form-group">
                   <label for="cellphone">Celular</label>
-                  <input type="text" class="form-control" id="cellphone" placeholder="número de celular" ng-model="vm.fns.clientModel.cellphone">
+                  <input type="text" class="form-control" id="cellphone" placeholder="número de celular" ng-model="vm.clientModel.cellphone">
                 </div>
               </div>
               <div class="col-xs-12 col-sm-6">
                 <div class="form-group">
                   <label for="state">Provincia</label>
-                  <input type="text" class="form-control" id="state" placeholder="provincia (Mendoza)" required="true" ng-model="vm.fns.clientModel.state">
+                  <input type="text" class="form-control" id="state" placeholder="provincia (Mendoza)" required="true" ng-model="vm.clientModel.state">
                 </div>
               </div>
               <div class="col-xs-12 col-sm-6">
                 <div class="form-group">
                   <label for="city">Ciudad</label>
-                  <input type="text" class="form-control" id="city" placeholder="ciudad (Rivadavia, Junin)" required="true" ng-model="vm.fns.clientModel.city">
+                  <input type="text" class="form-control" id="city" placeholder="ciudad (Rivadavia, Junin)" required="true" ng-model="vm.clientModel.city">
                 </div>
               </div>
               <div class="col-xs-12">
                 <div class="form-group">
                   <label for="address">Dirección</label>
-                  <input type="text" class="form-control" id="address" placeholder="dirección (Calle, barrio)" required="true" ng-model="vm.fns.clientModel.address">
-                </div> 
+                  <input type="text" class="form-control" id="address" placeholder="dirección (Calle, barrio)" required="true" ng-model="vm.clientModel.address">
+                </div>
               </div>
               <div class="col-xs-12">
                 <div class="form-group">
@@ -110,62 +110,71 @@
     <div class="col-xs-12 col-md-6">
       <label for="">Buscar por número</label>
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="n° de cliente">
+        <input type="number" class="form-control" placeholder="n° de cliente" ng-model="vm.clientSearch.number" ng-pattern="/^[0-9]/" step="1">
         <span class="input-group-btn">
-          <button class="btn btn-primary btn-fill" type="button"><i class="fa fa-search"></i></button>
+          <button class="btn btn-primary btn-fill" type="button" ng-click="[vm.clientSearch.lastName = null, vm.search()]">
+          <i class="fa fa-search"></i>
+          </button>
         </span>
       </div>
     </div>
     <div class="col-xs-12 col-md-6">
       <label for="">Buscar por apellido</label>
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="apellido">
+        <input type="text" class="form-control" placeholder="apellido" ng-model="vm.clientSearch.lastName">
         <span class="input-group-btn">
-          <button class="btn btn-primary btn-fill" type="button"><i class="fa fa-search"></i></button>
+          <button class="btn btn-primary btn-fill" type="button"
+          ng-click="[vm.clientSearch.number = null, vm.search()]">
+          <i class="fa fa-search"></i>
+          </button>
         </span>
       </div>
     </div>
   </div>
   <!-- Orders Loop -->
   <div class="row">
-    <div class="col-xs-12 col-lg-6">
+    <div class="col-xs-12 col-lg-6" ng-repeat="client in vm.clientList">
       <div class="card">
         <div class="content">
-          <div class="row">
+          <div class="row client-card">
             <div class="col-xs-12 col-sm-5">
               <p class="text-primary"><strong><i class="fa fa-user"></i>
-              Nombre Apellido</strong></p>
+              {{client.firstName}} {{client.lastName}}</strong></p>
               <p><strong><i class="fa fa-folder-open"></i>
-              Cliente</strong> 1234</p>
+              Cliente</strong> {{client.number}}</p>
               <p><strong><i class="fa fa-book"></i>
-              DNI</strong> 30234567</p>
+              DNI</strong> {{client.dni}}</p>
             </div>
-            <div class="col-xs-12 col-sm-5">
-              <p><i class="fa fa-location-arrow"></i> San Isidro 234</p>
-              <p><i class="fa fa-map-marker"></i> Rivadavia / Mendoza</p>
+            <div class="col-xs-12 col-sm-4">
+              <p><i class="fa fa-location-arrow"></i> {{client.address}}</p>
+              <p><i class="fa fa-map-marker"></i> {{client.city}} / {{client.state}}</p>
               <p><strong><i class="fa fa-phone"></i>
-              </strong> 44456567</p>
+              </strong> {{client.phone}}</p>
               <p><strong><i class="fa fa-mobile"></i>
-              </strong> 263456676</p>
+              </strong> {{client.cellphone}}</p>
             </div>
-            <div class="col-xs-12 col-sm-2">
+            <div class="col-xs-12 col-sm-3">
               <div class="dropdown">
                 <button class="btn btn-default btn-xs dropdown-toggle" type="button" id="clientActions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                 Acciones
                 <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="clientActions">
-                  <li><a href="#"><i class="fa fa-eye"></i> Ver detalle</a></li>
+                  <li><a href="/#/clients/{{client._id}}"><i class="fa fa-eye"></i> Ver detalle</a></li>
                   <li role="separator" class="divider"></li>
-                  <li><a href="#"><i class="fa fa-edit"></i> Editar</a></li>
+                  <li><a href="/#/clients/{{client._id}}/edit"><i class="fa fa-edit"></i> Editar</a></li>
                   <li role="separator" class="divider"></li>
-                  <li><a href="#" class="text-danger"><i class="fa fa-times"></i> Eliminar</a></li>
+                  <li><a href="#" ng-click="vm.remove(client,$event)" class="text-danger"><i class="fa fa-times"></i> Eliminar</a></li>
                 </ul>
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+    <div class="col-xs-12 text-center" ng-show="vm.clientList.length === 0">
+      <h3><i class="fa fa-frown-o"></i>
+      No se encontraron resultados para <strong>{{vm.searchWord}}</strong></h3>
     </div>
   </div>
   <!-- End order loop -->

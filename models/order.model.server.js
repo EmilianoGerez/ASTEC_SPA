@@ -15,13 +15,14 @@ var orderSchema = new Schema({
 	},
 	tech: {
 		id: String,
-		name: String
-	}, 
+		firstName: String,
+		lastName: String
+	},
 	status: {
 		type: String,
 		required: true,
-		enum: ['pending', 'canceled', 'assigned', 'completed'],
-		default: 'pending'
+		enum: ['Ingresada', 'Cancelada', 'Asignada', 'Completada'],
+		default: 'Asignada'
 	},
 	problem: {
 		type: String,
@@ -32,8 +33,9 @@ var orderSchema = new Schema({
 	},
 	observation: String,
 	solved: {
-		type: Boolean,
-		default: false
+		type: String,
+		enum: ['No', 'Si'],
+		default: 'No'
 	},
 	dateCreated: {
 		type: Date,
@@ -43,19 +45,23 @@ var orderSchema = new Schema({
 });
 
 orderSchema.pre('save', function(next) {
-    var self = this;
-    Counter.findByIdAndUpdate({
-        _id: 'OrderId'
-    }, {
-        $inc: {
-            seq: 1
-        }
-    }, function(err, count) {
-        //console.log(count);
-        if (err) return next(err);
-        self.number = count.seq;
-        next();
-    });
+	var self = this;
+	if (!self.dateComplete) {
+		Counter.findByIdAndUpdate({
+			_id: 'OrderId'
+		}, {
+			$inc: {
+				seq: 1
+			}
+		}, function(err, count) {
+			//console.log(count);
+			if (err) return next(err);
+			self.number = count.seq;
+			next();
+		});
+	} else {
+		next();
+	}
 });
 
 module.exports = mongoose.model('Order', orderSchema);

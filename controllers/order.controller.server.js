@@ -36,9 +36,19 @@ exports.findOne = function(req, res) {
 };
 
 exports.findBySearch = function(req, res) {
-	if (req.body.number) {
+	if (req.params.lastName !== 'null') {
 		Order.find({
-			'number': req.body.number
+			'client.lastName': { $regex: new RegExp("^" + req.params.lastName.toLowerCase(), "i") }
+		}).populate('client').exec(function(err, orders) {
+			if (err) {
+				res.status(500).send(err.message);
+			}
+
+			res.status(200).jsonp(orders);
+		});
+	} else if (!isNaN(req.params.number)) {
+		Order.find({
+			'number': req.params.number
 		}).populate('client').exec(function(err, orders) {
 			if (err) {
 				res.status(500).send(err.message);
@@ -65,7 +75,7 @@ exports.update = function(req, res) {
 		order.solution = req.body.solution;
 		order.observation = req.body.observation;
 		order.solved = req.body.solved;
-		order.dateComplete = req.body.dateComplete;
+		order.dateComplete = new Date();
 
 		order.save(function(err) {
 			if (err) {

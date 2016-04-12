@@ -17,6 +17,16 @@ exports.create = function(req, res) {
 };
 
 exports.findOne = function(req, res) {
+	Client.findById(req.params.id).exec(function(err, client){
+		if (err) {
+			res.status(500).send(err.message);
+		}
+
+		res.status(200).jsonp(client);
+	});
+};
+
+exports.findDetails = function(req, res) {
 	async.waterfall([
 		function getClient(callback) {
 			Client.findById(req.params.id).exec(function(err, client) {
@@ -51,9 +61,9 @@ exports.findOne = function(req, res) {
 };
 
 exports.findBySearch = function(req, res) {
-	if (req.body.lastName) {
+	if (req.params.lastName !== 'null') {
 		Client.find({
-			'lastName': req.body.lastName
+			'lastName': { $regex: new RegExp("^" + req.params.lastName.toLowerCase(), "i") }
 		}).exec(function(err, clients) {
 			if (err) {
 				res.status(500).send(err.message);
@@ -61,9 +71,9 @@ exports.findBySearch = function(req, res) {
 
 			res.status(200).jsonp(clients);
 		});
-	} else if (req.body.number) {
+	} else if (!isNaN(req.params.number)) {
 		Client.find({
-			'number': req.body.number
+			'number': req.params.number
 		}).exec(function(err, clients) {
 			if (err) {
 				res.status(500).send(err.message);

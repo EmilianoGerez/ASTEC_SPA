@@ -24,7 +24,7 @@ exports.signup = function (req, res) {
   if (!req.body.email || !req.body.password) {
     return res.status(400).json({
       error: true,
-      message: "email or Password can't be blank"
+      message: "Email or Password can't be blank"
     });
   }
 

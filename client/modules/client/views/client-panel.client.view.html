@@ -131,31 +131,15 @@
       </div>
     </div>
   </div>
-  <!-- Orders Loop -->
+  <!-- Client Loop -->
   <div class="row">
     <div class="col-xs-12 col-lg-6" ng-repeat="client in vm.clientList">
-      <div class="card">
+      <div class="card card-rw">
         <div class="content">
-          <div class="row client-card">
-            <div class="col-xs-12 col-sm-5">
-              <p class="text-primary"><strong><i class="fa fa-user"></i>
-              {{client.firstName}} {{client.lastName}}</strong></p>
-              <p><strong><i class="fa fa-folder-open"></i>
-              Cliente</strong> {{client.number}}</p>
-              <p><strong><i class="fa fa-book"></i>
-              DNI</strong> {{client.dni}}</p>
-            </div>
-            <div class="col-xs-12 col-sm-5">
-              <p><i class="fa fa-location-arrow"></i> {{client.address}}</p>
-              <p><i class="fa fa-map-marker"></i> {{client.city}} / {{client.state}}</p>
-              <p><strong><i class="fa fa-phone"></i>
-              </strong> {{client.phone}}</p>
-              <p><strong><i class="fa fa-mobile"></i>
-              </strong> {{client.cellphone}}</p>
-            </div>
-            <div class="col-xs-12 col-sm-2">
-              <div class="dropdown">
-                <button class="btn btn-simple btn-default dropdown-toggle pull-right" type="button" id="clientActions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          <div class="row card-header">
+            <div class="col-xs-12">
+              <div class="dropdown pull-right">
+                <button class="btn btn-simple btn-default dropdown-toggle" type="button" id="clientActions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                 <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="clientActions">
@@ -164,6 +148,24 @@
                   <li><a href="#" ng-click="vm.remove(client,$event)" class="text-danger"><i class="fa fa-times"></i> Eliminar</a></li>
                 </ul>
               </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-sm-6">
+              <p class="text-primary"><strong><i class="fa fa-user"></i>
+              {{client.firstName}} {{client.lastName}}</strong></p>
+              <p><strong><i class="fa fa-folder-open"></i>
+              Cliente</strong> {{client.number}}</p>
+              <p><strong><i class="fa fa-book"></i>
+              DNI</strong> {{client.dni}}</p>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              <p><i class="fa fa-location-arrow"></i> {{client.address}}</p>
+              <p><i class="fa fa-map-marker"></i> {{client.city}} / {{client.state}}</p>
+              <p><strong><i class="fa fa-phone"></i>
+              </strong> {{client.phone}}</p>
+              <p><strong><i class="fa fa-mobile"></i>
+              </strong> {{client.cellphone}}</p>
             </div>
           </div>
         </div>

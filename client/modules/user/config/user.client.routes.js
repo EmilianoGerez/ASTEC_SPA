@@ -16,11 +16,11 @@ angular.module('user')
         }
       });
   }])
-  .run(['$rootScope', '$location', 'store', 'jwtHelper', function($rootScope, $location, store, jwtHelper) {
+  .run(['$rootScope', '$window', 'store', 'jwtHelper', function($rootScope, $window, store, jwtHelper) {
     $rootScope.$on('$stateChangeStart', function(e, to) {
       if (to.data && to.data.requiresLogin) {
         if (!store.get('jwt')) {
-          return $location.path('signin');
+          $window.location.href = '/signin';
         }
       }
     });

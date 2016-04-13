@@ -1,48 +1,47 @@
 angular.module('user')
-  .controller('UserController', ['$scope', '$location', 'Users', '$http', 'store', 'jwtHelper', function($scope, $location, Users, $http, store, jwtHelper) {
-    $scope.user = {
-      name: "",
-      password: "",
-      confirmPassword: ""
-    };
-    $scope.signup = function() {
+  .controller('UserController', ['$window', 'Users', '$http', 'store', 'jwtHelper', function($window, Users, $http, store, jwtHelper) {
+
+    this.user = {};
+
+    this.signup = function() {
       $http({
         url: 'http://localhost:3000/api/users/signup',
         method: 'POST',
-        data: $scope.user
+        data: this.user
       }).then(function(response) {
         store.set('jwt', response.data.token);
-        $location.path('/');
+        $window.location.href = '/panel';
       }, function(err) {
-        $scope.errMessage = err.data.message;
+        console.log(err);
+        this.errMessage = err.data.message;
       });
     };
 
-    $scope.signin = function() {
+    this.signin = function() {
       $http({
         url: 'http://localhost:3000/api/users/signin',
         method: 'POST',
-        data: $scope.user
+        data: this.user
       }).then(function(response) {
         var token = response.data.token;
         store.set('jwt', token);
-        $location.path('/');
+        $window.location.href = '/panel';
       }, function(err) {
-        $scope.errMessage = err.data.message;
+        this.errMessage = err.data.message;
       });
     };
 
-    $scope.isAuth = function() {
+    this.isAuth = function() {
       var token = store.get('jwt');
       if (token) {
-        $scope.payload = jwtHelper.decodeToken(token);
+        this.payload = jwtHelper.decodeToken(token);
         return true;
       } else {
         return false;
       }
     };
 
-    $scope.logout = function() {
+    this.logout = function() {
       var token = store.get('jwt');
       var decoded = jwtHelper.decodeToken(token);
       Users.logout.get({

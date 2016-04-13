@@ -1,5 +1,8 @@
 var mongoose = require('mongoose');
 var Order = mongoose.model('Order');
+var Client = mongoose.model('Client');
+var async = require('async');
+
 
 exports.create = function(req, res) {
 	var newOrder = new Order(req.body);
@@ -36,16 +39,20 @@ exports.findOne = function(req, res) {
 };
 
 exports.findBySearch = function(req, res) {
+
 	if (req.params.lastName !== 'null') {
-		Order.find({
-			'client.lastName': { $regex: new RegExp("^" + req.params.lastName.toLowerCase(), "i") }
-		}).populate('client').exec(function(err, orders) {
+
+		async.waterfall([
+			async.apply(getClients, req),
+			getOrders
+		], function(err, orders) {
 			if (err) {
 				res.status(500).send(err.message);
 			}
 
-			res.status(200).jsonp(orders);
+			return res.status(200).jsonp(orders);
 		});
+
 	} else if (!isNaN(req.params.number)) {
 		Order.find({
 			'number': req.params.number
@@ -99,3 +106,42 @@ exports.remove = function(req, res) {
 		});
 	});
 };
+
+// functions helper
+function getClients(req, callback) {
+	Client.find({
+		'lastName': {
+			$regex: new RegExp("^" + req.params.lastName.toLowerCase(), "i")
+		}
+	}).exec(function(err, clients) {
+		if (err) {
+			callback(err, null);
+			return;
+		}
+		callback(null, clients);
+	});
+}
+
+function getOrders(clients, callback) {
+	var arrayId = createArray(clients);
+
+	Order.find({
+		"client": {
+			"$in": arrayId
+		}
+	}).populate('client').exec(function(err, orders) {
+		if (err) {
+			callback(err, null);
+			return;
+		}
+		callback(null, orders);
+	});
+}
+
+function createArray(clients) {
+	var arrayId = [];
+	clients.forEach(function(e) {
+		arrayId.push(e._id);
+	});
+	return arrayId;
+}

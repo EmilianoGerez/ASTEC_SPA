@@ -7,22 +7,6 @@
       </div>
     </div>
   </div>
-  <!-- Alert Error/Success -->
-  <div class="row">
-    <div class="col-xs-12">
-      <div ng-show="vm.errorInfo.msg" class="alert alert-danger" role="alert">
-        <p><strong>
-          Error:
-        </strong> {{vm.errorInfo.msg}}</p>
-      </div>
-      <div ng-show="vm.successInfo.msg" class="alert alert-success" role="alert">
-        <p><strong>
-          {{vm.successInfo.msg}}
-        </strong></p>
-        <p>Número: {{vm.successInfo.data.number}}</p>
-      </div>
-    </div>
-  </div>
   <!-- Client Form -->
   <div class="row">
     <div class="col-xs-12">
@@ -109,6 +93,25 @@
             </form>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+  <!-- Alert Error/Success -->
+  <div class="row">
+    <div class="col-xs-12">
+      <div ng-show="vm.errorInfo.msg" class="alert alert-danger" role="alert">
+        <p><strong>
+          Error:
+        </strong> {{vm.errorInfo.msg}}</p>
+      </div>
+      <div ng-show="vm.successInfo.msg" class="alert alert-success" role="alert">
+        <p><strong>
+          {{vm.successInfo.msg}}
+        </strong></p>
+        <p>Número: {{vm.successInfo.data.number}}</p>
+        <p>
+        <a href="/panel#/orders/{{vm.orderModel._id}}" class="btn btn-primary btn-fill btn-sm">Ver detalle</a>
+        </p>
       </div>
     </div>
   </div>

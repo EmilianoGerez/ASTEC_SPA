@@ -42,11 +42,8 @@ angular
 
         // Home state routing
         $stateProvider
-            .state('home', {
+            .state('dashboard', {
                 url: '/',
-                templateUrl: 'modules/main/views/home.client.view.html'
-            }).state('dashboard', {
-                url: '/dashboard',
                 templateUrl: 'modules/main/views/dashboard.client.view.html'
             });
     }]);

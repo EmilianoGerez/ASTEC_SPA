@@ -6,4 +6,8 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+router.get('/panel', function(req, res, next) {
+  res.render('admin-app');
+});
+
 module.exports = router;

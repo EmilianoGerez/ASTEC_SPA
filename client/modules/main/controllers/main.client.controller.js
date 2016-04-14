@@ -1,10 +1,18 @@
-function mainCtrl($location) {
+function mainCtrl(UserServ, Orders) {
 	var vm = this;
 
-	var currentPath = $location.path();
-	vm.isHome = (currentPath == '/') ? true : false;
+	vm.getOrders = function() {
+		var payload = UserServ.currentUserData();
+
+		Orders.api.query(function(response) {
+			vm.orders = response.filter(function(e) {
+				return e.tech.id == payload._id;
+			});
+		});
+	};
+	
 }
 
 angular
 	.module('main')
-	.controller('mainCtrl', ['$location', mainCtrl]);
+	.controller('mainCtrl', ['UserServ', 'Orders', mainCtrl]);

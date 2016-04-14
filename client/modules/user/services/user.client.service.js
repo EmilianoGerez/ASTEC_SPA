@@ -9,8 +9,8 @@ angular.module('user').factory('Users', ['$resource', function($resource) {
         id: '@_id'
     });
 
-    var search = $resource('api/users/search/:name', {
-        name: '@name'
+    var search = $resource('api/users/search/:email', {
+        email: '@email'
     });
 
     return {

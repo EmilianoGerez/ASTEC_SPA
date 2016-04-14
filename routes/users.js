@@ -15,7 +15,7 @@ router.get('/logout/:id', userController.isAuth, userController.logout);
 
 router.post('/refresh', userController.refresh);
 
-router.get('/search/:name', userController.isAvailable);
+router.get('/search/:email', userController.isAvailable);
 
 router.get('/secure', userController.isAuth, function(req, res) {
 	res.status(200).json({

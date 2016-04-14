@@ -1,72 +1,63 @@
 angular.module('user')
   .controller('UserController', ['$window', 'Users', '$http', 'store', 'jwtHelper', '$stateParams', function($window, Users, $http, store, jwtHelper, $stateParams) {
 
-    this.user = {};
+    var vm = this;
+    vm.user = {};
+    vm.errorInfo = {};
 
-    this.signup = function() {
+    vm.signup = function() {
       // $http({
       //   url: 'http://localhost:3000/api/users/signup',
       //   method: 'POST',
-      //   data: this.user
+      //   data: vm.user
       // }).then(function(response) {
       //   store.set('jwt', response.data.token);
       //   $window.location.href = '/panel';
       // }, function(err) {
       //   console.log(err);
-      //   this.errMessage = err.data.message;
+      //   vm.errMessage = err.data.message;
       // });
-      var newUser = new Users.api(this.user);
+      var newUser = new Users.api(vm.user);
 
       newUser.$save(function(response) {
-        console.log(response);
         store.set('jwt', response.token);
         $window.location.href = '/panel';
       }, function(err) {
-        console.log(err);
+        vm.errorInfo = err;
       });
     };
 
-    this.signin = function() {
+    vm.signin = function() {
       $http({
         url: 'http://localhost:3000/api/users/signin',
         method: 'POST',
-        data: this.user
+        data: vm.user
       }).then(function(response) {
         var token = response.data.token;
         store.set('jwt', token);
         $window.location.href = '/panel';
       }, function(err) {
-        this.errMessage = err.data.message;
+        vm.errorInfo = err.data;
       });
     };
 
-    this.getAll = function() {
+    vm.getAll = function() {
       Users.api.query(function(response) {
-        this.users = response.filter(function(e) {
+        vm.users = response.filter(function(e) {
           return e.role === 'Tech';
         });
       });
     };
 
-    this.getOne = function() {
+    vm.getOne = function() {
       Users.api.get({
         id: $stateParams.id
       }, function(response) {
-        this.user = response;
+        vm.user = response;
       });
     };
 
-    this.isAuth = function() {
-      var token = store.get('jwt');
-      if (token) {
-        this.payload = jwtHelper.decodeToken(token);
-        return true;
-      } else {
-        return false;
-      }
-    };
-
-    this.logout = function() {
+    vm.logout = function() {
       var token = store.get('jwt');
       var decoded = jwtHelper.decodeToken(token);
       Users.logout.get({
@@ -122,7 +113,7 @@ angular.module('user')
 
           // using resource
           var data = Users.search.get({
-            name: value
+            email: value
           }, function() {
             if (data.data === null) {
               setAsLoading(false);

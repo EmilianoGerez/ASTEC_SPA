@@ -9,7 +9,9 @@
   <title></title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- css files and libs -->
   <% include partials/_css-libs.ejs %>
+  <link rel="stylesheet" href="/assets/css/login.css">
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 </head>
 <body ng-app="main" ng-cloak>
@@ -19,30 +21,40 @@
   <!-- Add your site or application content here -->
   <div ng-controller="UserController as ctrl">
     <div class="container-fluid">
-      <div class="row">
-        <div class="col-xs-12 col-md-4 col-md-offset-4">
-          <form ng-submit="ctrl.signup()">
+      <div class="row form-wrapper">
+        <div class="col-xs-12 col-md-4">
+          <h4 class="text-center">Registrarse</h4>
+          <form ng-submit="ctrl.signup()" name='signupForm' id="signupForm">
             <div class="form-group">
               <input type="text" class="form-control" id="firstName" placeholder="Nombre"
-              ng-model="ctrl.user.firstName">
+              ng-model="ctrl.user.firstName" required>
             </div>
             <div class="form-group">
               <input type="text" class="form-control" id="lastName" placeholder="Apellido"
-              ng-model="ctrl.user.lastName">
+              ng-model="ctrl.user.lastName" required>
             </div>
             <div class="form-group">
-              <input type="email" class="form-control" id="email" placeholder="Email"
-              ng-model="ctrl.user.email">
+              <input type="email" class="form-control" id="email" name="email" placeholder="Email"
+              ng-model="ctrl.user.email" required record-availability-validator="">
+              <div ng-messages="signupForm.email.$error" class="text-danger">
+                <div ng-messages-include="form-messages"></div>
+              </div>
             </div>
             <div class="form-group">
-              <input type="password" class="form-control" id="pass" placeholder="Contaseña"
-              ng-model="ctrl.user.password">
+              <input type="password" class="form-control" id="pass" name="pass" placeholder="Contaseña"
+              ng-model="ctrl.user.password" required>
             </div>
             <div class="form-group">
-              <input type="password" class="form-control" id="pass" placeholder=" Repite la contaseña">
+              <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder=" Repite la contaseña"
+              ng-model="ctrl.user.confirmPassword" compare-to="ctrl.user.password"
+              required>
+              <div ng-messages="signupForm.confirmPassword.$error" class="text-danger">
+                <div ng-messages-include="form-messages"></div>
+              </div>
             </div>
             <div class="form-group">
-              <button type="submit" class="btn btn-primary btn-fill btn-block">Registrarse</button>
+              <button type="submit" class="btn btn-primary btn-fill btn-block" ng-disabled="!signupForm.$valid">
+              Registrarse</button>
             </div>
           </form>
         </div>

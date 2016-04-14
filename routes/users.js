@@ -5,6 +5,10 @@ var userController = require('../controllers/user.server.controller');
 
 router.post('/signup', userController.signup);
 
+router.get('/signup', userController.findAll);
+
+router.get('/signup/:id', userController.findOne);
+
 router.post('/signin', userController.signin);
 
 router.get('/logout/:id', userController.isAuth, userController.logout);

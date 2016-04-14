@@ -1,4 +1,4 @@
-<section ng-controller="OrderCtrl as vm" ng-init="vm.findOne()">
+<section ng-controller="OrderCtrl as vm" ng-init="[vm.getAllUsers(),vm.findOne(true)]">
   <!-- Header -->
   <div class="row">
     <div class="col-xs-12">
@@ -47,10 +47,7 @@
               <div class="col-xs-12 col-sm-6">
                 <div class="form-group">
                   <label for="tech">Técnico</label>
-                  <select class="form-control" ng-model="vm.orderModel.tech">
-                    <option>1</option>
-                    <option>2</option>
-                  </select>
+                  <select class="form-control" ng-model="vm.selectedTech" ng-options="option as (option.firstName + ' ' + option.lastName) for option in vm.users"></select>
                 </div>
               </div>
               <div class="col-xs-12">

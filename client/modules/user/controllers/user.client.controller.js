@@ -1,19 +1,28 @@
 angular.module('user')
-  .controller('UserController', ['$window', 'Users', '$http', 'store', 'jwtHelper', function($window, Users, $http, store, jwtHelper) {
+  .controller('UserController', ['$window', 'Users', '$http', 'store', 'jwtHelper', '$stateParams', function($window, Users, $http, store, jwtHelper, $stateParams) {
 
     this.user = {};
 
     this.signup = function() {
-      $http({
-        url: 'http://localhost:3000/api/users/signup',
-        method: 'POST',
-        data: this.user
-      }).then(function(response) {
-        store.set('jwt', response.data.token);
+      // $http({
+      //   url: 'http://localhost:3000/api/users/signup',
+      //   method: 'POST',
+      //   data: this.user
+      // }).then(function(response) {
+      //   store.set('jwt', response.data.token);
+      //   $window.location.href = '/panel';
+      // }, function(err) {
+      //   console.log(err);
+      //   this.errMessage = err.data.message;
+      // });
+      var newUser = new Users.api(this.user);
+
+      newUser.$save(function(response) {
+        console.log(response);
+        store.set('jwt', response.token);
         $window.location.href = '/panel';
       }, function(err) {
         console.log(err);
-        this.errMessage = err.data.message;
       });
     };
 
@@ -28,6 +37,22 @@ angular.module('user')
         $window.location.href = '/panel';
       }, function(err) {
         this.errMessage = err.data.message;
+      });
+    };
+
+    this.getAll = function() {
+      Users.api.query(function(response) {
+        this.users = response.filter(function(e) {
+          return e.role === 'Tech';
+        });
+      });
+    };
+
+    this.getOne = function() {
+      Users.api.get({
+        id: $stateParams.id
+      }, function(response) {
+        this.user = response;
       });
     };
 

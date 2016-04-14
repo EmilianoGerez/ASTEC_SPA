@@ -6,7 +6,7 @@ angular.module('order')
         url: '/orders',
         templateUrl: 'modules/order/views/order-panel.client.view.html',
         data: {
-          requiresLogin: true
+          requiresLogin: false
         }
       }).state('editorder', {
         url: '/orders/:id/edit',

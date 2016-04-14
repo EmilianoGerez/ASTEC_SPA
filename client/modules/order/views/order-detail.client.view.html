@@ -7,74 +7,72 @@
 			</div>
 		</div>
 	</div>
-	<!-- Order Form -->		<div class="col-xs-12">
-	<div class="card">
-		<div class="content">
-			<!-- ORDER DETAIL -->
-			<div class="row">
-				<div class="col-xs-12">
-					<h4>Detalle de cliente</h4>
-					<hr>
-					<div class="col-xs-12 col-sm-6">
-						<p><strong><i class="fa fa-user"></i>
-						{{vm.orderModel.client.firstName}} {{vm.orderModel.client.lastName}}</strong></p>
-						<p><strong><i class="fa fa-folder-open"></i>
-						Cliente</strong> {{vm.orderModel.client.number}}</p>
-						<p><strong><i class="fa fa-book"></i>
-						DNI</strong> {{vm.orderModel.client.dni}}</p>
-					</div>
-					<div class="col-xs-12 col-sm-6">
-						<p><i class="fa fa-location-arrow"></i> {{vm.orderModel.client.address}}</p>
-						<p><i class="fa fa-map-marker"></i> {{vm.orderModel.client.city}} / {{vm.orderModel.client.state}}</p>
-						<p><strong><i class="fa fa-phone"></i>
-						</strong> {{vm.orderModel.client.phone}}</p>
-						<p><strong><i class="fa fa-mobile"></i>
-						</strong> {{vm.orderModel.client.cellphone}}</p>
-					</div>
+	<!-- Order Form -->
+	<div class="col-xs-12">
+		<div class="card">
+			<div class="content">
+				<!-- ORDER DETAIL -->
+				<div class="row">
 					<div class="col-xs-12">
-						<h4>Detalle de orden</h4>
+						<h4>Detalle de cliente</h4>
 						<hr>
+						<div class="col-xs-12 col-sm-6">
+							<p><strong><i class="fa fa-user"></i>
+							{{vm.orderModel.client.firstName}} {{vm.orderModel.client.lastName}}</strong></p>
+							<p><strong><i class="fa fa-folder-open"></i>
+							Cliente</strong> {{vm.orderModel.client.number}}</p>
+							<p><strong><i class="fa fa-book"></i>
+							DNI</strong> {{vm.orderModel.client.dni}}</p>
+						</div>
+						<div class="col-xs-12 col-sm-6">
+							<p><i class="fa fa-location-arrow"></i> {{vm.orderModel.client.address}}</p>
+							<p><i class="fa fa-map-marker"></i> {{vm.orderModel.client.city}} / {{vm.orderModel.client.state}}</p>
+							<p><strong><i class="fa fa-phone"></i>
+							</strong> {{vm.orderModel.client.phone}}</p>
+							<p><strong><i class="fa fa-mobile"></i>
+							</strong> {{vm.orderModel.client.cellphone}}</p>
+						</div>
+						<div class="col-xs-12">
+							<h4>Detalle de orden</h4>
+							<hr>
+						</div>
+						<div class="col-xs-12 col-sm-6">
+							<p><i class="fa fa-hashtag" aria-hidden="true"></i> {{vm.orderModel.number}}</p>
+							<p><i class="fa fa-wrench"></i> <strong>{{vm.orderModel.tech.firstName}} {{vm.orderModel.tech.lastName}}</strong></p>
+							<p>
+								<i class="fa fa-thumbs-o-up"></i> <strong>Solucionado:</strong>
+								{{vm.orderModel.solved}}
+							</p>
+						</div>
+						<div class="col-xs-12 col-sm-6">
+							<p><i class="fa fa-calendar"></i> Ingreso: {{vm.orderModel.dateCreated | date:'mediumDate'}}</p>
+							<p ng-show="vm.orderModel.dateComplete"><i class="fa fa-calendar"></i> Actualizada: {{vm.orderModel.dateComplete | date:'mediumDate'}}</p>
+							
+						</div>
+						<div class="col-xs-12">
+							<p><strong><i class="fa fa-exclamation-triangle"></i> Problema</strong></p>
+							<p>
+								{{vm.orderModel.problem}}
+							</p>
+						</div>
+						<div class="col-xs-12">
+							<p><strong><i class="fa fa-check"></i> Solución</strong></p>
+							<p>
+								{{vm.orderModel.solution}}
+							</p>
+							<p ng-show="!vm.orderModel.solution">No se ha descripto</p>
+						</div>
+						<div class="col-xs-12">
+							<p><strong><i class="fa fa-comment"></i> Observación</strong></p>
+							<p>
+								{{vm.orderModel.observation}}
+							</p>
+							<p ng-show="!vm.orderModel.observation">No se ha descripto</p>
+						</div>
+						<button onclick='window.print();' class="btn btn-default btn-fill pull-right"><i class="fa fa-print"></i> Imprimir</button>
 					</div>
-					<div class="col-xs-12 col-sm-6">
-						<p><i class="fa fa-hashtag" aria-hidden="true"></i> {{vm.orderModel.number}}</p>
-						<p><i class="fa fa-wrench"></i> <strong>{{vm.orderModel.tech.firstName}} {{vm.orderModel.tech.lastName}}</strong></p>
-						<p>
-							<i class="fa fa-thumbs-o-up"></i> <strong>Solucionado:</strong>
-							{{vm.orderModel.solved}}
-						</p>
-					</div>
-					<div class="col-xs-12 col-sm-6">
-						<p><i class="fa fa-calendar"></i> Ingreso: {{vm.orderModel.dateCreated | date:'mediumDate'}}</p>
-						<p ng-show="vm.orderModel.dateComplete"><i class="fa fa-calendar"></i> Actualizada: {{vm.orderModel.dateComplete | date:'mediumDate'}}</p>
-						
-					</div>
-					<div class="col-xs-12">
-						<p><strong><i class="fa fa-exclamation-triangle"></i> Problema</strong></p>
-						<p>
-							{{vm.orderModel.problem}}
-						</p>
-					</div>
-					<div class="col-xs-12">
-						<p><strong><i class="fa fa-check"></i> Solución</strong></p>
-						<p>
-							{{vm.orderModel.solution}}
-						</p>
-						<p ng-show="!vm.orderModel.solution">No se ha descripto</p>
-					</div>
-					<div class="col-xs-12">
-						<p><strong><i class="fa fa-comment"></i> Observación</strong></p>
-						<p>
-							{{vm.orderModel.observation}}
-						</p>
-						<p ng-show="!vm.orderModel.observation">No se ha descripto</p>
-					</div>
-					<button onclick='window.print();' class="btn btn-default btn-fill pull-right"><i class="fa fa-print"></i> Imprimir</button>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
-</div>
-</div>
-</div>
 </section>

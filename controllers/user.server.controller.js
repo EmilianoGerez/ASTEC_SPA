@@ -131,6 +131,30 @@ exports.signin = function (req, res) {
 };
 
 //////////////////////////////////////////////////////////
+/// List Users
+exports.findAll = function(req, res) {
+  User.find(function(err, users) {
+    if (err) {
+      res.status(500).send(err.message);
+    }
+
+    res.status(200).jsonp(users);
+  }); 
+};
+
+//////////////////////////////////////////////////////////
+/// Find one user
+exports.findOne =function(req, res) {
+  User.findById(req.params.id, function(err, user) {
+    if (err) {
+      res.status(500).send(err.message);
+    }
+
+    res.status(200).jsonp(user);
+  });
+};
+
+//////////////////////////////////////////////////////////
 /// User logout
 exports.logout = function (req, res) {
   var agent = getAgent(req);

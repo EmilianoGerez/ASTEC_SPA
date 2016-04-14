@@ -1,4 +1,4 @@
-function OrderCtrl(Orders, Clients, $http, $window, $stateParams) {
+function OrderCtrl(Orders, Clients, Users, $http, $window, $stateParams) {
   var vm = this;
 
   vm.orderModel = {};
@@ -13,15 +13,15 @@ function OrderCtrl(Orders, Clients, $http, $window, $stateParams) {
   };
   vm.solvedOpt = ['No', 'Si'];
   vm.orderStatus = ['Cancelada', 'Asignada', 'Completada'];
+  vm.selectedTech = '';
 
   vm.create = function(form) {
-    // hardcode attr
+    // asing attr
     vm.orderModel.client = vm.clientData._id;
-    // TODO
     vm.orderModel.tech = {
-      id: '1',
-      firstName: 'Jesie',
-      lastName: 'Pinkman'
+      id: vm.selectedTech._id,
+      firstName: vm.selectedTech.firstName,
+      lastName: vm.selectedTech.lastName
     };
 
     var neworder = new Orders.api(vm.orderModel);
@@ -76,20 +76,26 @@ function OrderCtrl(Orders, Clients, $http, $window, $stateParams) {
     }
   };
 
-  vm.findOne = function() {
+  vm.findOne = function(edit) {
     Orders.api.get({
       id: $stateParams.id
     }, function(response) {
       vm.orderModel = response;
+      // set tech for select in edit form
+      if(edit){
+        vm.selectedTech = vm.users.filter(function(e) {
+          return e._id === vm.orderModel.tech.id;
+        });
+        vm.selectedTech = vm.selectedTech[0];
+      }
     });
   };
 
   vm.update = function(form) {
-    // TODO
     vm.orderModel.tech = {
-      id: '1',
-      firstName: 'Walter',
-      lastName: 'White'
+      id: vm.selectedTech._id,
+      firstName: vm.selectedTech.firstName,
+      lastName: vm.selectedTech.lastName
     };
 
     vm.orderModel.$update(function(res) {
@@ -104,6 +110,14 @@ function OrderCtrl(Orders, Clients, $http, $window, $stateParams) {
       //alert
       vm.successInfo.msg = null;
       vm.errorInfo.msg = err.data;
+    });
+  };
+
+  vm.getAllUsers = function() {
+    Users.api.query(function(response) {
+      vm.users = response.filter(function(e) {
+        return e.role === 'Tech';
+      });
     });
   };
 
@@ -127,12 +141,11 @@ function OrderCtrl(Orders, Clients, $http, $window, $stateParams) {
       vm.orderList = response;
     });
   }
-
 }
 
 angular
   .module('order')
-  .controller('OrderCtrl', ['Orders', 'Clients', '$http', '$window', '$stateParams', OrderCtrl]);
+  .controller('OrderCtrl', ['Orders', 'Clients', 'Users', '$http', '$window', '$stateParams', OrderCtrl]);
 // angular.module('user')
 //   .directive('recordAvailabilityValidator', ['$http', 'Users', function($http, Users) {
 

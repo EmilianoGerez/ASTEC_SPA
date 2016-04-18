@@ -27,6 +27,7 @@ var userSchema = new Schema({
     }
 });
 
+
 // generating a hash
 userSchema.methods.generateHash = function(password) {
 return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);

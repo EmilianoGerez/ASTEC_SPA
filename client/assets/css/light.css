@@ -1078,7 +1078,10 @@ body > .navbar-collapse[data-color="purple"]:after {
 }
 
 /*      Checkbox and radio         */
-.checkbox,
+.checkbox label{
+  display: initial !important;
+}
+/*.checkbox,
 .radio {
   margin-bottom: 12px;
   padding-left: 32px;
@@ -1211,7 +1214,7 @@ body > .navbar-collapse[data-color="purple"]:after {
   opacity: 1;
   filter: alpha(opacity=100);
   color: #D9D9D9;
-}
+}*/
 
 /* ============================================================
  * bootstrapSwitch v1.3 by Larentis Mattia @spiritualGuru
@@ -3410,7 +3413,12 @@ h2,h3 >  i {
 
 /* card */
 .card h4 {
-  margin: 0px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+.card h4:first-child {
+  margin-top: 0px;
+  margin-bottom: 15px;
 }
 .card-rw div[class|='col'] {
   padding-right: 5px;
@@ -3430,6 +3438,22 @@ h2,h3 >  i {
   line-height: 40px;
 }
 
+/* card current user*/
+.profile-img-card {
+    width: 96px;
+    height: 96px;
+    margin: 0 auto 10px;
+    display: block;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
+
+/* user form */
+.user-form > div {
+  padding: 30px;
+}
+
 
 /* order view styles*/
 .client-data{
@@ -3444,10 +3468,6 @@ h2,h3 >  i {
 }
 .search-order {
   margin-bottom: 15px;
-}
-
-.order-detail h4{
-  margin: 0px;
 }
 
 /* home view styles*/

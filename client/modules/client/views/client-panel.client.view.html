@@ -110,7 +110,8 @@
     <div class="col-xs-12 col-md-6">
       <label for="">Buscar por número</label>
       <div class="input-group">
-        <input type="number" class="form-control" placeholder="n° de cliente" ng-model="vm.clientSearch.number" ng-pattern="/^[0-9]/" step="1">
+        <input type="number" class="form-control" placeholder="n° de cliente" ng-model="vm.clientSearch.number" ng-pattern="/^[0-9]/" step="1"
+        code="13" dl-key-code="[vm.clientSearch.lastName = null, vm.search()];">
         <span class="input-group-btn">
           <button class="btn btn-primary btn-fill" type="button" ng-click="[vm.clientSearch.lastName = null, vm.search()]">
           <i class="fa fa-search"></i>
@@ -121,7 +122,8 @@
     <div class="col-xs-12 col-md-6">
       <label for="">Buscar por apellido</label>
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="apellido" ng-model="vm.clientSearch.lastName">
+        <input type="text" class="form-control" placeholder="apellido" ng-model="vm.clientSearch.lastName"
+        code="13" dl-key-code="[vm.clientSearch.number = null, vm.search()];">
         <span class="input-group-btn">
           <button class="btn btn-primary btn-fill" type="button"
           ng-click="[vm.clientSearch.number = null, vm.search()]">
@@ -145,7 +147,7 @@
                 <ul class="dropdown-menu" aria-labelledby="clientActions">
                   <li><a href="/panel#/clients/{{client._id}}/edit"><i class="fa fa-edit"></i> Editar</a></li>
                   <li role="separator" class="divider"></li>
-                  <li><a href="#" ng-click="vm.remove(client,$event)" class="text-danger"><i class="fa fa-times"></i> Eliminar</a></li>
+                  <li><a href="" ng-click="vm.remove(client)" class="text-danger"><i class="fa fa-times"></i> Eliminar</a></li>
                 </ul>
               </div>
             </div>
@@ -176,5 +178,5 @@
       No se encontraron resultados para <strong>{{vm.searchWord}}</strong></h3>
     </div>
   </div>
-  <!-- End order loop -->
+  <!-- End client loop -->
 </section>

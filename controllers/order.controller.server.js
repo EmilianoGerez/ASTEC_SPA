@@ -18,8 +18,10 @@ exports.create = function(req, res) {
 
 exports.findAll = function(req, res) {
 	Order.find({
-		'status': 'pending'
-	}).exec(function(err, orders) {
+		'status': {
+			'$in': ['Ingresada', 'Asignada']
+		}
+	}).populate('client').exec(function(err, orders) {
 		if (err) {
 			res.status(500).send(err.message);
 		}

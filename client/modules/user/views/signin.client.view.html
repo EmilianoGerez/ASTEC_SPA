@@ -1,45 +1,22 @@
-<section data-ng-controller = 'UserController'>
-	<div class="row">
-		<div class="well col-xs-12 col-md-6 col-md-offset-3">
-			<div class="panel-form">
-				<h3><a href="#/" class="btn"><i class="mdi-action-home"></i></a> LogIn</h3>
-				<form ng-submit="signin()" method="post" class="form-horizontal" name="loginForm">
-					<fieldset>
-						<div class="form-group" ng-show="errMessage">
-							<div class="alert alert-danger col-xs-10 col-xs-offset-1" role="alert">
-								<h4>Error!</h4>
-								<p>{{errMessage}}</p>
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="name" class="col-md-2 control-label">Name</label>
-							<div class="col-md-10">
-								<input type="text" class="form-control" name="name"
-								ng-model="user.name"
-								placeholder="name"
-								required />
-								<div ng-messages="loginForm.name.$error" class="text-danger">
-									<div ng-messages-include="form-messages"></div>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="password" class="col-md-2 control-label">Password</label>
-							<div class="col-md-10">
-								<input type="password" class="form-control" ng-model="user.password" placeholder="password" name="password" required/>
-								<div ng-messages="loginForm.password.$error" class="text-danger">
-									<div ng-messages-include="form-messages"></div>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-md-10 col-md-offset-2">
-								<button type="submit" class="btn btn-primary" ng-disabled="!loginForm.$valid">Login</button>
-							</div>
-						</div>
-					</fieldset>
-				</form>
+<div data-ng-controller = 'UserController as ctrl'>
+			<h4 class="text-center">Ingresar</h4>
+			<form ng-submit="ctrl.signin()" name="signinForm" id="signinForm">
+				<div class="form-group">
+					<input type="email" class="form-control" id="email" placeholder="Email"
+					ng-model="ctrl.user.email" required>
+				</div>
+				<div class="form-group">
+					<input type="password" class="form-control" id="pass" placeholder="Contaseña"
+					ng-model="ctrl.user.password" required>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-success btn-fill btn-block" ng-disabled="!signinForm.$valid">
+					Ingresar</button>
+				</div>
+			</form>
+			<div ng-show="ctrl.errorInfo.error" class="alert alert-danger" role="alert">
+				<p><strong>
+					Error:
+				</strong> {{ctrl.errorInfo.message}}</p>
 			</div>
-		</div>
-	</div>
-</section>
+</div>

@@ -1,16 +1,33 @@
 function mainCtrl(UserServ, Orders) {
 	var vm = this;
 
-	vm.getOrders = function() {
-		var payload = UserServ.currentUserData();
 
-		Orders.api.query(function(response) {
-			vm.orders = response.filter(function(e) {
-				return e.tech.id == payload._id;
-			});
-		});
-	};
+	vm.getCurrentUser = (function() {
+		vm.currentUserData = UserServ.getCurrentUserData();
+	})();
 	
+	vm.logout = function() {
+		vm.currentUserData = {};
+		UserServ.logout();
+	};
+
+	vm.getOrders = function() {
+		var user = vm.currentUserData;
+		vm.isAdmin = (user.role == 'Admin') ? true : false;
+
+		if (vm.isAdmin) {
+			Orders.api.query(function(response) {
+				vm.orders = response;
+			});
+		} else {
+			Orders.api.query(function(response) {
+				vm.orders = response.filter(function(e) {
+					return e.tech.id == user._id;
+				});
+			});
+		}
+	};
+
 }
 
 angular

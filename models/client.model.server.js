@@ -8,7 +8,8 @@ var clientSchema = new Schema({
 		unique: true
 	},
 	dni: {
-		type: Number
+		type: Number,
+		unique: true
 	},
 	firstName: {
 		type: String,

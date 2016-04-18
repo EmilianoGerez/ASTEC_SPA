@@ -24,7 +24,7 @@
       <div class="row form-wrapper">
         <div class="col-xs-12 col-md-4">
           <h4 class="text-center">Registrarse</h4>
-          <form ng-submit="ctrl.signup()" name='signupForm' id="signupForm">
+          <form ng-submit="ctrl.publicSignup()" name='signupForm' id="signupForm">
             <div class="form-group">
               <input type="text" class="form-control" id="firstName" placeholder="Nombre"
               ng-model="ctrl.user.firstName" required>
@@ -57,6 +57,11 @@
               Registrarse</button>
             </div>
           </form>
+          <div ng-show="ctrl.errorInfo.error" class="alert alert-danger" role="alert">
+            <p><strong>
+              Error:
+            </strong> {{ctrl.errorInfo.message}}</p>
+          </div>
         </div>
       </div>
     </div>

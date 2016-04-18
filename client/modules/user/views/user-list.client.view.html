@@ -1,0 +1,156 @@
+<section ng-controller="UserController as ctrl" ng-init="[ctrl.getCurrentUser(), ctrl.getAll()]">
+	<!-- Header -->
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="header">
+				<h3 class="title"><i class="fa fa-users" aria-hidden="true"></i>Usuarios del sistema</h3>
+			</div>
+		</div>
+	</div>
+	<!-- Current user data -->
+	<div class="row">
+		<div class="col-xs-12 col-md-6 pull-right">
+			<div class="card card-rw">
+				<div class="content">
+					<div class="row card-header">
+						<div class="col-xs-12">
+							<div class="dropdown pull-right">
+								<button class="btn btn-simple btn-default dropdown-toggle" type="button" id="userActions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+								<i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+								</button>
+								<ul class="dropdown-menu" aria-labelledby="userActions">
+									<li><a href="/panel#/users/{{ctrl.currentUser._id}}/edit"><i class="fa fa-edit"></i> Editar</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="row text-center">
+						<div class="col-xs-12">
+							<img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+							<h2>{{ctrl.currentUser.firstName}} {{ctrl.currentUser.lastName}}</h2>
+						</div>
+						<div class="col-xs-12">
+							<p><strong><i class="fa fa-envelope" aria-hidden="true"></i></strong> {{ctrl.currentUser.email}}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- user Loop -->
+		<div class="col-xs-12 col-md-6" ng-repeat="user in ctrl.users">
+			<div class="card card-rw">
+				<div class="content">
+					<div class="row card-header">
+						<div class="col-xs-12">
+							<div class="dropdown pull-right">
+								<button class="btn btn-simple btn-default dropdown-toggle" type="button" id="userActions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+								<i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+								</button>
+								<ul class="dropdown-menu" aria-labelledby="userActions">
+									<li><a href="/panel#/users/{{user._id}}/edit"><i class="fa fa-edit"></i> Editar</a></li>
+									<li role="separator" class="divider"></li>
+									<li><a href="" ng-click="ctrl.remove(user)" class="text-danger"><i class="fa fa-times"></i> Eliminar</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<p class="">
+								<strong ng-show="user.role == 'Admin'"><i class="fa fa-user"></i></strong>
+								<strong ng-hide="user.role == 'Admin'"><i class="fa fa-wrench" aria-hidden="true"></i></strong>
+								{{user.firstName}} {{user.lastName}} ({{user.role}})
+							</p>
+							<p><strong><i class="fa fa-envelope" aria-hidden="true"></i></strong> {{user.email}}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End user loop -->
+	<!-- Header -->
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="header">
+				<h3 class="title"><i class="fa fa-user-plus" aria-hidden="true"></i>Crear usuario</h3>
+			</div>
+		</div>
+	</div>
+	<!-- User Form -->
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="card">
+				<div class="content">
+					<div class="row">
+						<form ng-submit="ctrl.signup()" name='signupForm' id="signupForm">
+							<div class="col-xs-12 col-sm-6">
+								<div class="form-group">
+									<label for="firstName">Nombre</label>
+									<input type="text" class="form-control" id="firstName" placeholder="Nombre"
+									ng-model="ctrl.user.firstName" required>
+								</div>
+							</div>
+							<div class="col-xs-12 col-sm-6">
+								<div class="form-group">
+									<label for="lastName">Apellido</label>
+									<input type="text" class="form-control" id="lastName" placeholder="Apellido"
+									ng-model="ctrl.user.lastName" required>
+								</div>
+							</div>
+							
+							<div class="col-xs-12 col-sm-6">
+								<div class="form-group">
+									<label for="pass">Contraseña</label>
+									<input type="password" class="form-control" id="pass" name="pass" placeholder="Contaseña"
+									ng-model="ctrl.user.password" required>
+								</div>
+							</div>
+							<div class="col-xs-12 col-sm-6">
+								<div class="form-group">
+									<label for="confirmPassword">Repetir contraseña</label>
+									<input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder=" Repite la contaseña"
+									ng-model="ctrl.user.confirmPassword" compare-to="ctrl.user.password"
+									required>
+									<div ng-messages="signupForm.confirmPassword.$error" class="text-danger">
+										<div ng-messages-include="form-messages"></div>
+									</div>
+								</div>
+							</div>
+							<div class="col-xs-12 col-sm-6">
+								<div class="form-group">
+									<label for="email">Email</label>
+									<input type="email" class="form-control" id="email" name="email" placeholder="Email"
+									ng-model="ctrl.user.email" required record-availability-validator="">
+									<div ng-messages="signupForm.email.$error" class="text-danger">
+										<div ng-messages-include="form-messages"></div>
+									</div>
+								</div>
+							</div>
+							<div class="col-xs-12 col-sm-6">
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" ng-model=ctrl.user.role> Crear Administrador
+									</label>
+								</div>
+							</div>
+							<div class="col-xs-12 col-sm-6">
+								<div class="form-group">
+									<button type="submit" class="btn btn-success btn-fill pull-right" ng-disabled="!signupForm.$valid">
+									Crear usuario</button>
+								</div>
+							</div>
+						</form>
+						<div ng-show="ctrl.errorInfo.error" class="alert alert-danger" role="alert">
+							<p><strong>
+								Error:
+							</strong> {{ctrl.errorInfo.message}}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End User Form -->
+	
+</section>

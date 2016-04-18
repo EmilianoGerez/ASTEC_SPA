@@ -1,41 +1,41 @@
 angular.module('user')
-  .controller('UserController', ['$window', 'Users', '$http', 'store', 'jwtHelper', '$stateParams', function($window, Users, $http, store, jwtHelper, $stateParams) {
+  .controller('UserController', ['$window', 'Users', 'UserServ', '$http', 'store', 'jwtHelper', '$stateParams', '$state', function($window, Users, UserServ, $http, store, jwtHelper, $stateParams, $state) {
 
     var vm = this;
     vm.user = {};
     vm.errorInfo = {};
 
-    vm.signup = function() {
-      // $http({
-      //   url: 'http://localhost:3000/api/users/signup',
-      //   method: 'POST',
-      //   data: vm.user
-      // }).then(function(response) {
-      //   store.set('jwt', response.data.token);
-      //   $window.location.href = '/panel';
-      // }, function(err) {
-      //   console.log(err);
-      //   vm.errMessage = err.data.message;
-      // });
+    vm.publicSignup = function() {
       var newUser = new Users.api(vm.user);
 
       newUser.$save(function(response) {
         store.set('jwt', response.token);
         $window.location.href = '/panel';
       }, function(err) {
-        vm.errorInfo = err;
+        vm.errorInfo = err.data;
+      });
+    };
+
+    vm.signup = function() {
+      vm.user.role = (vm.user.role) ? 'Admin' : 'Tech';
+      var newUser = new Users.api(vm.user);
+
+      newUser.$save(function(response) {
+        // add user to the list
+        vm.users.push(vm.user);
+        // reset form
+        vm.user = {};
+      }, function(err) {
+        vm.errorInfo = err.data;
       });
     };
 
     vm.signin = function() {
-      $http({
-        url: 'http://localhost:3000/api/users/signin',
-        method: 'POST',
-        data: vm.user
-      }).then(function(response) {
-        var token = response.data.token;
-        store.set('jwt', token);
-        $window.location.href = '/panel';
+      var user = new Users.signin(vm.user);
+
+      user.$save(function(response){
+        store.set('jwt', response.token);
+        $window.location.href = '/panel#/';
       }, function(err) {
         vm.errorInfo = err.data;
       });
@@ -44,7 +44,7 @@ angular.module('user')
     vm.getAll = function() {
       Users.api.query(function(response) {
         vm.users = response.filter(function(e) {
-          return e.role === 'Tech';
+          return e._id !== vm.currentUser._id;
         });
       });
     };
@@ -57,15 +57,30 @@ angular.module('user')
       });
     };
 
-    vm.logout = function() {
-      var token = store.get('jwt');
-      var decoded = jwtHelper.decodeToken(token);
-      Users.logout.get({
-        id: decoded._id
-      }, function() {
-        store.remove('jwt');
+    vm.getCurrentUser = function() {
+      vm.currentUser = UserServ.getCurrentUserData();
+    };
+
+    vm.update = function() {
+      vm.user.$update(function(response) {
+        $state.go('userList');
+      }, function(err) {
+        vm.errorInfo = err.data;
       });
     };
+
+    vm.remove = function(user) {
+      var confirm = $window.confirm('Quieres eliminar el usuario ' + user.firstName + ' ' + user.lastName + ' ?');
+
+      if (confirm) {
+        user.$remove();
+        vm.users = vm.users.filter(function(e) {
+          return e._id !== user._id;
+        });
+      }
+    };
+
+    
   }]);
 
 

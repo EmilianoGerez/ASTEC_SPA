@@ -3,9 +3,64 @@
   <div class="row">
     <div class="col-xs-12">
       <div class="header">
-        <h3 class="title"><i class="fa fa-tasks"></i>Ordenes pendientes</h3>
+        <h3 class="title" ng-hide="ctrl.isAdmin"><i class="fa fa-tasks"></i>Ordenes asignadas
+         <span class="badge">{{ctrl.orders.length}}</span></h3>
+        <h3 class="title" ng-show="ctrl.isAdmin"><i class="fa fa-tasks"></i>Ordenes pendientes
+         <span class="badge">{{ctrl.orders.length}}</span></h3>
       </div>
     </div>
   </div>
-  {{ctrl.orders}}
+  <!-- Orders Loop -->
+  <div class="row">
+    <div class="col-xs-12 col-lg-6" ng-repeat="order in ctrl.orders">
+      <div class="card card-rw">
+        <div class="content">
+          <div class="row card-header">
+            <div class="col-xs-6">
+              <span ng-show="order.status == 'Asignada'"><span class="label label-warning">{{order.status}}</span></span>
+              <span ng-show="order.status == 'Completada'"><span class="label label-success">{{order.status}}</span></span>
+              <span ng-show="order.status == 'Cancelada'"><span class="label label-danger">{{order.status}}</span></span>
+            </div>
+            <div class="col-xs-6">
+              <div class="dropdown pull-right">
+                <button class="btn btn-simple btn-default dropdown-toggle" type="button" id="clientActions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                  <li><a href="/panel#/orders/{{order._id}}"><i class="fa fa-eye"></i> Ver detalle</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="/panel#/orders/{{order._id}}/edit"><i class="fa fa-edit"></i> Editar</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="#" class="text-danger"><i class="fa fa-times"></i> Eliminar</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-md-5">
+              <p>
+                <strong><i class="fa fa-user"></i> {{order.client.firstName}} {{order.client.lastName}}</strong>
+              </p>
+            </div>
+            <div class="col-xs-12 col-md-5">
+              <p><i class="fa fa-calendar"></i> Ing: {{order.dateCreated | date:'mediumDate'}}</p>
+            </div>
+            <div class="col-xs-12 col-md-2">
+              <p><i class="fa fa-hashtag" aria-hidden="true"></i> {{order.number}}</p>
+            </div>
+            <div class="col-xs-12">
+              <p><i class="fa fa-location-arrow"></i> {{order.client.address}}</p>
+              <p><strong>Problema:</strong>
+                {{order.problem}}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 text-center" ng-show="ctrl.orders.length === 0">
+      <h3><i class="fa fa-smile-o" aria-hidden="true"></i>
+      No tienes ordenes!!</h3>
+    </div>
+  </div>
 </section>

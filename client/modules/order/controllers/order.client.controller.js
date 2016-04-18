@@ -66,13 +66,13 @@ function OrderCtrl(Orders, Clients, Users, $http, $window, $stateParams) {
   };
 
   vm.remove = function(order) {
-    var confirm = $window.confirm('Quieres eliminar a ' + order.firstName + ' ' + order.lastName + ' ?');
+    var confirm = $window.confirm('Quieres eliminar la orden N° #' + order.number + ' ?');
 
     if (confirm) {
       order.$remove();
-      // vm.orderList = vm.orderList.filter(function(e) {
-      //   return e._id !== order._id;
-      // });
+      vm.orderList = vm.orderList.filter(function(e) {
+        return e._id !== order._id;
+      });
     }
   };
 
@@ -82,7 +82,7 @@ function OrderCtrl(Orders, Clients, Users, $http, $window, $stateParams) {
     }, function(response) {
       vm.orderModel = response;
       // set tech for select in edit form
-      if(edit){
+      if (edit) {
         vm.selectedTech = vm.users.filter(function(e) {
           return e._id === vm.orderModel.tech.id;
         });

@@ -48,9 +48,9 @@ function ClientCtrl(Clients, $http, $window, $stateParams) {
 
     if (confirm) {
       client.$remove();
-        // vm.clientList = vm.clientList.filter(function(e) {
-        //   return e._id !== client._id;
-        // });
+      vm.clientList = vm.clientList.filter(function(e) {
+        return e._id !== client._id;
+      });
     }
   };
 

@@ -43,7 +43,7 @@ exports.signup = function (req, res) {
     if (err) {
       return res.status(500).json({
         error: true,
-        message: 'Error: ' + err
+        message: err
       });
     }
 
@@ -153,6 +153,56 @@ exports.findOne =function(req, res) {
     res.status(200).jsonp(user);
   });
 };
+
+//////////////////////////////////////////////////////////
+/// Update a user
+exports.update = function(req, res) {
+  User.findById(req.params.id).exec(function(err, user) {
+    if (err) {
+      res.status(500).send(err.message);
+    }
+
+    user.firstName = req.body.firstName;
+    user.lastName = req.body.lastName;
+    user.email = req.body.email;
+    user.password = req.body.password;
+    
+
+    user.save(function(err) {
+      if (err) {
+        res.status(500).send(err.message);
+      }
+
+      // get user agent
+      var agent = getAgent(req);
+
+      // create token
+      var token = createToken(user, agent, tokenConfig.EXP_TIME);
+      // create refresh token
+      createRefreshToken(user, agent);
+      res.status(200).send({
+        error: false,
+        token: token
+      });
+    });
+  });
+};
+
+//////////////////////////////////////////////////////////
+/// Remove a user
+exports.remove = function(req, res) {
+  User.remove({
+    '_id': req.params.id
+  }, function(err) {
+    if (err) {
+      res.status(500).send(err.message);
+    }
+    res.status(204).jsonp({
+      'message': 'Uusuario eliminado'
+    });
+  });
+};
+
 
 //////////////////////////////////////////////////////////
 /// User logout

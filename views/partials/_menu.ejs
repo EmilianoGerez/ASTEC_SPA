@@ -13,25 +13,25 @@
 			<li class="active">
 				<a href="#/dashboard">
 					<i class="pe-7s-graph"></i>
-					<p>Dashboard</p>
-				</a>
-			</li>
-			<li>
-				<a href="#/users">
-					<i class="pe-7s-graph"></i>
-					<p>Usuarios</p>
+					<p><i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard</p>
 				</a>
 			</li>
 			<li class="">
 				<a href="#/clients">
 					<i class="pe-7s-graph"></i>
-					<p>Clientes</p>
+					<p><i class="fa fa-male" aria-hidden="true"></i> Clientes</p>
 				</a>
 			</li>
 			<li class="">
 				<a href="#/orders">
 					<i class="pe-7s-graph"></i>
-					<p>Ordenes</p>
+					<p><i class="fa fa-tasks" aria-hidden="true"></i> Ordenes</p>
+				</a>
+			</li>
+			<li>
+				<a href="#/users">
+					<i class="pe-7s-graph"></i>
+					<p><i class="fa fa-users" aria-hidden="true"></i> Usuarios</p>
 				</a>
 			</li>
 		</ul>
@@ -51,13 +51,13 @@
 			</div>
 			<div class="collapse navbar-collapse">
 				<ul class="nav navbar-nav navbar-right">
-					<li>
-						<a href="#">
-							Hola {nombre}
+					<li ng-show="main.currentUserData">
+						<a href="">
+							Hola {{main.currentUserData.firstName}}
 						</a>
 					</li>
-					<li>
-						<a href="#">
+					<li ng-show="main.currentUserData">
+						<a href="" ng-click="main.logout()">
 							Salir
 						</a>
 					</li>

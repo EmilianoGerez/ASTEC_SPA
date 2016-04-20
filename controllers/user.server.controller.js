@@ -6,6 +6,7 @@ var jwt = require('jsonwebtoken');
 var useragent = require('useragent');
 var _ = require('lodash');
 var nodemailer = require('nodemailer');
+var userCodes = require('../configs/user-code.server.config');
 
 // create reusable transporter object using SMTP transport
 var transporter = nodemailer.createTransport({
@@ -21,10 +22,10 @@ var transporter = nodemailer.createTransport({
 exports.signup = function (req, res) {
 
   // check form data
-  if (!req.body.email || !req.body.password) {
+  if (req.body.code !== userCodes.ADMIN_CODE && req.body.code !== userCodes.TECH_CODE ) {
     return res.status(400).json({
       error: true,
-      message: "Email or Password can't be blank"
+      message: "Incorrect code"
     });
   }
 
@@ -37,7 +38,7 @@ exports.signup = function (req, res) {
   newUser.firstName = req.body.firstName;
   newUser.lastName = req.body.lastName;
   newUser.password = newUser.generateHash(req.body.password);
-  newUser.role = req.body.role || 'Tech';
+  newUser.role = (req.body.code == userCodes.ADMIN_CODE) ? 'Admin' : 'Tech';
 
   newUser.save(function (err, user) {
     if (err) {

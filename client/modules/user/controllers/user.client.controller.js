@@ -17,7 +17,14 @@ angular.module('user')
     };
 
     vm.signup = function() {
-      vm.user.role = (vm.user.role) ? 'Admin' : 'Tech';
+      //var userRole = (vm.user.role) ? 'Admin' : 'Tech';
+      // set code for user role
+      if(vm.user.role) {
+        vm.user.code = 'yb9b637i2v';
+      }else {
+        vm.user.code = 'dw77yee18u';
+      }
+
       var newUser = new Users.api(vm.user);
 
       newUser.$save(function(response) {

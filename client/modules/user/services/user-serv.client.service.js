@@ -5,15 +5,24 @@ function UserServ(store, jwtHelper, $window, Users) {
 		if (token) {
 			var payload = jwtHelper.decodeToken(token);
 			return payload;
-		}else {
+		} else {
+			return false;
+		}
+	};
+
+	this.isAdmin = function() {
+		var payload = this.getCurrentUserData();
+		if (payload.role == 'Admin') {
+			return true;
+		} else {
 			return false;
 		}
 	};
 
 	this.logout = function() {
-		var decoded = this.getCurrentUserData();
+		var payload = this.getCurrentUserData();
 		Users.logout.get({
-			id: decoded._id
+			id: payload._id
 		}, function() {
 			store.remove('jwt');
 			$window.location.href = '/';

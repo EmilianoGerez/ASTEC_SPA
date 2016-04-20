@@ -1,18 +1,18 @@
-<section ng-controller="mainCtrl as ctrl" ng-init="ctrl.getOrders()">
+<section ng-init="main.getOrders()">
   <!-- Header -->
   <div class="row">
     <div class="col-xs-12">
       <div class="header">
-        <h3 class="title" ng-hide="ctrl.isAdmin"><i class="fa fa-tasks"></i>Ordenes asignadas
-         <span class="badge">{{ctrl.orders.length}}</span></h3>
-        <h3 class="title" ng-show="ctrl.isAdmin"><i class="fa fa-tasks"></i>Ordenes pendientes
-         <span class="badge">{{ctrl.orders.length}}</span></h3>
+        <h3 class="title" ng-hide="main.isAdmin"><i class="fa fa-tasks"></i>Ordenes asignadas
+         <span class="badge">{{main.orders.length}}</span></h3>
+        <h3 class="title" ng-show="main.isAdmin"><i class="fa fa-tasks"></i>Ordenes pendientes
+         <span class="badge">{{main.orders.length}}</span></h3>
       </div>
     </div>
   </div>
   <!-- Orders Loop -->
   <div class="row">
-    <div class="col-xs-12 col-lg-6" ng-repeat="order in ctrl.orders">
+    <div class="col-xs-12 col-lg-6" ng-repeat="order in main.orders">
       <div class="card card-rw">
         <div class="content">
           <div class="row card-header">
@@ -58,7 +58,7 @@
         </div>
       </div>
     </div>
-    <div class="col-xs-12 text-center" ng-show="ctrl.orders.length === 0">
+    <div class="col-xs-12 text-center" ng-show="main.orders.length === 0">
       <h3><i class="fa fa-smile-o" aria-hidden="true"></i>
       No tienes ordenes!!</h3>
     </div>

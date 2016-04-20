@@ -14,7 +14,7 @@ router.get('/signup', function(req, res, next) {
   res.render('public-signup');
 });
 
-router.get('/signin', function(req, res, next) {
+router.get('/user', function(req, res, next) {
   res.render('signin');
 });
 

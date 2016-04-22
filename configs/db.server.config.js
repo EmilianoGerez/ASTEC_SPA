@@ -1,3 +1,3 @@
 module.exports = {
-    url: 'mongodb://localhost:27017/skynet'
+    url: 'mongodb://heroku_4n39tnlx:dev1988@ds013891.mongolab.com:45694/heroku_4n39tnlx'
 };

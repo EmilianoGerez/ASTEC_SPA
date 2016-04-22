@@ -54,7 +54,8 @@ exports.signup = function (req, res) {
     createRefreshToken(user, agent);
     res.status(201).send({
       error: false,
-      token: token
+      token: token,
+      data: user
     });
   });
 };

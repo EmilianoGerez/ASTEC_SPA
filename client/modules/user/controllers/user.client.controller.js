@@ -21,15 +21,17 @@ angular.module('user')
       // set code for user role
       if(vm.user.role) {
         vm.user.code = 'yb9b637i2v';
+        vm.user.role = 'Admin';
       }else {
         vm.user.code = 'dw77yee18u';
+        vm.user.role = 'Tech';
       }
 
       var newUser = new Users.api(vm.user);
 
       newUser.$save(function(response) {
         // add user to the list
-        vm.users.push(vm.user);
+        vm.users.push(response.data);
         // reset form
         vm.user = {};
       }, function(err) {

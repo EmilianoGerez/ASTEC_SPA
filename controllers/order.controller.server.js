@@ -26,7 +26,15 @@ exports.findAll = function(req, res) {
 			res.status(500).send(err.message);
 		}
 
-		res.status(200).jsonp(orders);
+		Order.find({'status': 'Completada'}).sort('-dateComplete').limit(10).populate('client').exec(function(err, ordersComplete) {
+			if (err) {
+				res.status(500).send(err.message);
+			}
+
+			res.status(200).jsonp([orders, ordersComplete]);
+
+		});
+
 	});
 };
 

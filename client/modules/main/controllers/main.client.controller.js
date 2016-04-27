@@ -35,13 +35,19 @@ function mainCtrl(UserServ, Orders, $location, $rootScope) {
 
 		if (vm.isAdmin) {
 			Orders.api.query(function(response) {
-				vm.orders = response;
+				vm.orders = response[0];
+				vm.ordersComplete = response[1];
 			});
 		} else {
 			Orders.api.query(function(response) {
-				vm.orders = response.filter(function(e) {
+				// convert object to array
+				var orders = response[0];
+				var arr = Object.keys(orders).map(function (key) {return orders[key]});
+				// filter by current user
+				vm.orders = arr.filter(function(e) {
 					return e.tech.id == user._id;
 				});
+
 			});
 		}
 	};

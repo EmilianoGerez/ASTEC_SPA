@@ -38,7 +38,7 @@ angular.module('user')
         if (jwtHelper.isTokenExpired(idToken)) {
           // This is a promise of a JWT id_token
           return $http({
-            url: 'http://localhost:7000/api/users/refresh',
+            url: 'https://localhost:7000/api/users/refresh',
             // This makes it so that this request doesn't send the JWT
             skipAuthorization: true,
             method: 'POST',

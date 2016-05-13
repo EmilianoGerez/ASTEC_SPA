@@ -1,3 +1,4 @@
 node_modules/
-configs/token.server.config.js
-configs/user-code.server.config.js
+key/
+# configs/token.server.config.js
+# configs/user-code.server.config.js

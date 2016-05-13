@@ -6,9 +6,24 @@ angular
 
         // Home state routing
         $stateProvider
-            .state('dashboard', {
+            .state('home', {
                 url: '/',
-                templateUrl: 'modules/main/views/dashboard.client.view.html',
+                views: {
+                    'public': {
+                        templateUrl: 'modules/main/views/home.client.view.html',
+                    }
+                },
+                data: {
+                    requiresLogin: false
+                }
+            })
+            .state('dashboard', {
+                url: '/dashboard',
+                views: {
+                    'private': {
+                        templateUrl: 'modules/main/views/dashboard.client.view.html',
+                    }
+                },
                 data: {
                     requiresLogin: true
                 }

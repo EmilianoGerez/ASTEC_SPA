@@ -17,7 +17,7 @@ router.post('/signin', userController.signin);
 
 router.get('/logout/:id', userController.isAuth, userController.logout);
 
-router.post('/refresh', userController.isAuth, userController.refresh);
+router.post('/refresh', userController.refresh);
 
 router.get('/search/:email', userController.isAvailable);
 

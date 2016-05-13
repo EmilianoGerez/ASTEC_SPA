@@ -573,7 +573,7 @@ var verifyAgent = function (token, agent) {
 
 var setupEmail = function (req, token) {
   var mailOptions = {
-    from: 'emiliano.gerez@gmail.com', // sender address
+    from: 'username@gmail.com', // sender address
     to: req.body.email, // list of receivers
     subject: 'Reset your password', // Subject line
     text: 'You are receiving this because you (or someone else) have        requested the reset of the password for your account.\n\n' +

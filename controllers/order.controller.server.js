@@ -30,8 +30,8 @@ exports.findAll = function(req, res) {
 			if (err) {
 				res.status(500).send(err.message);
 			}
-
-			res.status(200).jsonp([orders, ordersComplete]);
+			var totalOrders = orders.concat(ordersComplete);
+			res.status(200).jsonp(totalOrders);
 
 		});
 

@@ -12,6 +12,8 @@ router.get('/:id', userController.isAuth, controller.findOne);
 // list pendig orders
 router.get('/', userController.isAuth, controller.findAll);
 // remove
+router.delete('/:id', userController.isAuth, controller.remove);
+// remove
 router.delete('/:id/search/:number/:lastName', userController.isAuth, controller.remove);
 // search (send one params set to null)
 router.get('/search/:number/:lastName', userController.isAuth, controller.findBySearch);

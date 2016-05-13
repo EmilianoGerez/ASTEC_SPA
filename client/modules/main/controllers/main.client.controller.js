@@ -1,10 +1,10 @@
-function mainCtrl(UserServ, Orders, $location, $rootScope) {
+function mainCtrl(UserServ, Orders, $location, $rootScope, $window) {
 	var vm = this;
 
 	// set section name
 	$rootScope.$on('$stateChangeStart', function() {
 		switch ($location.$$path) {
-			case '/':
+			case '/dashboard':
 				vm.currentSection = 'Dashboard';
 				break;
 			case '/clients':
@@ -33,22 +33,33 @@ function mainCtrl(UserServ, Orders, $location, $rootScope) {
 		var user = vm.currentUserData;
 		vm.isAdmin = (user.role == 'Admin') ? true : false;
 
-		if (vm.isAdmin) {
-			Orders.api.query(function(response) {
-				vm.orders = response[0];
-				vm.ordersComplete = response[1];
+		Orders.api.query(function(response) {
+			vm.orders = response.filter(function (e) {
+				if (vm.isAdmin) {
+					return e.status == 'Asignada';
+				}
+				return e.status == 'Asignada' && e.tech.id == user._id;
 			});
-		} else {
-			Orders.api.query(function(response) {
-				// convert object to array
-				var orders = response[0];
-				var arr = Object.keys(orders).map(function (key) {return orders[key]});
-				// filter by current user
-				vm.orders = arr.filter(function(e) {
-					return e.tech.id == user._id;
-				});
+			vm.ordersComplete = response.filter(function (e) {
+				return e.status == 'Completada';
+			});
+		});
+	};
 
-			});
+	vm.remove = function(order) {
+		var confirm = $window.confirm('Quieres eliminar la orden N° #' + order.number + ' ?');
+		if (confirm) {
+			order.$remove(function(){
+                if(order.status === 'Asignada'){
+                    vm.orders = vm.orders.filter(function(e) {
+                        return e._id !== order._id;
+                    });
+                }else {
+                    vm.ordersComplete = vm.ordersComplete.filter(function(e) {
+                        return e._id !== order._id;
+                    })
+                }
+            });
 		}
 	};
 
@@ -56,4 +67,4 @@ function mainCtrl(UserServ, Orders, $location, $rootScope) {
 
 angular
 	.module('main')
-	.controller('mainCtrl', ['UserServ', 'Orders', '$location', '$rootScope', mainCtrl]);
+	.controller('mainCtrl', ['UserServ', 'Orders', '$location', '$rootScope', '$window', mainCtrl]);

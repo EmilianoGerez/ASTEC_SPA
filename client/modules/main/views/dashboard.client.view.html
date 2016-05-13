@@ -1,4 +1,4 @@
-<section ng-init="main.getOrders()">
+<section ng-controller="mainCtrl as main" ng-init="[main.getCurrentUser(), main.getOrders()]">
   <!-- Header -->
   <div class="row">
     <div class="col-xs-12">
@@ -27,11 +27,13 @@
                 <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                  <li><a href="/panel#/orders/{{order._id}}"><i class="fa fa-eye"></i> Ver detalle</a></li>
+                  <li><a href="/#/orders/{{order._id}}"><i class="fa fa-eye"></i> Ver detalle</a></li>
                   <li role="separator" class="divider"></li>
-                  <li><a href="/panel#/orders/{{order._id}}/edit"><i class="fa fa-edit"></i> Editar</a></li>
+                  <li><a href="/#/orders/{{order._id}}/edit"><i class="fa fa-edit"></i> Editar</a></li>
                   <li role="separator" class="divider" ng-show="main.currentUserData.role == 'Admin'"></li>
-                  <li ng-show="main.currentUserData.role == 'Admin'"><a href="#" class="text-danger"><i class="fa fa-times"></i> Eliminar</a></li>
+                  <li ng-show="main.currentUserData.role == 'Admin'">
+                    <a ng-click="main.remove(order)" class="text-danger">
+                      <i class="fa fa-times"></i> Eliminar</a></li>
                 </ul>
               </div>
             </div>
@@ -91,11 +93,13 @@
                 <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                  <li><a href="/panel#/orders/{{order._id}}"><i class="fa fa-eye"></i> Ver detalle</a></li>
+                  <li><a href="/#/orders/{{order._id}}"><i class="fa fa-eye"></i> Ver detalle</a></li>
                   <li role="separator" class="divider"></li>
-                  <li><a href="/panel#/orders/{{order._id}}/edit"><i class="fa fa-edit"></i> Editar</a></li>
+                  <li><a href="/#/orders/{{order._id}}/edit"><i class="fa fa-edit"></i> Editar</a></li>
                   <li role="separator" class="divider" ng-show="main.currentUserData.role == 'Admin'"></li>
-                  <li ng-show="main.currentUserData.role == 'Admin'"><a href="#" class="text-danger"><i class="fa fa-times"></i> Eliminar</a></li>
+                  <li ng-show="main.currentUserData.role == 'Admin'">
+                    <a ng-click="main.remove(order)"class="text-danger">
+                      <i class="fa fa-times"></i> Eliminar</a></li>
                 </ul>
               </div>
             </div>

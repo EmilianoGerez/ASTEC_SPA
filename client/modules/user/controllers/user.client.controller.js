@@ -10,7 +10,7 @@ angular.module('user')
 
       newUser.$save(function(response) {
         store.set('jwt', response.token);
-        $window.location.href = '/panel';
+        $state.go('dashboard');
       }, function(err) {
         vm.errorInfo = err.data;
       });
@@ -44,7 +44,9 @@ angular.module('user')
 
       user.$save(function(response){
         store.set('jwt', response.token);
-        $window.location.href = '/panel#/';
+        //$window.location.href = '/panel#/';
+          $state.go('dashboard');
+
       }, function(err) {
         vm.errorInfo = err.data;
       });

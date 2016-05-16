@@ -12,7 +12,7 @@
 
 <div data-ui-view="public">
         <span ng-controller="mainCtrl as main">
-        <div class="wrapper" ng-if="main.currentUserData">
+        <div class="wrapper" ng-if="main.currentUserData" ng-cloak>
             <% include partials/_menu.ejs %>
             <div class="content">
             <div class="container-fluid">

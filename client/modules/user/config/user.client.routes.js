@@ -67,7 +67,6 @@ angular.module('user')
                         store.set('jwt', id_token);
                         return id_token;
                     }, function (err) {
-                        console.log(err);
                         store.remove('jwt');
                         $state.go('signin');
                         return false;

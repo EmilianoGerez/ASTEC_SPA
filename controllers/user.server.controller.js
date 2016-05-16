@@ -167,7 +167,7 @@ exports.update = function(req, res) {
     user.firstName = req.body.firstName;
     user.lastName = req.body.lastName;
     user.email = req.body.email;
-    user.password = req.body.password;
+    user.password = user.generateHash(req.body.password);
     
 
     user.save(function(err) {
@@ -226,8 +226,6 @@ exports.logout = function (req, res) {
         return e;
       }
     });
-
-    console.log(fetchToken);
 
     if (!fetchToken) {
       return res.status(403).json({
@@ -384,7 +382,6 @@ exports.isAuth = function (req, res, next) {
 //////////////////////////////////////////////////////////
 /// Admin Autorization
 exports.isAdmin = function (req, res, next) {
-  console.log("EN ADMIN AUTH");
   if (req.decoded.role === 'Admin') {
     next();
   } else {

@@ -7,10 +7,6 @@ angular.module('user')
 
     vm.publicSignup = function() {
 
-        vm.user.firstName = vm.user.firstName.toLowerCase();
-        vm.user.lastName = vm.user.lastName.toLowerCase();
-        vm.user.password = vm.user.password.toLowerCase();
-
       var newUser = new Users.api(vm.user);
 
       newUser.$save(function(response) {
@@ -22,10 +18,6 @@ angular.module('user')
     };
 
     vm.signup = function() {
-
-        vm.user.firstName = vm.user.firstName.toLowerCase();
-        vm.user.lastName = vm.user.lastName.toLowerCase();
-        vm.user.password = vm.user.password.toLowerCase();
 
       //var userRole = (vm.user.role) ? 'Admin' : 'Tech';
       // set code for user role

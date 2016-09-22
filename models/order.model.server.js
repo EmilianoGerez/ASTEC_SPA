@@ -2,7 +2,6 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var Counter = mongoose.model('Counter');
 
-
 var orderSchema = new Schema({
 	number: {
 		type: String,

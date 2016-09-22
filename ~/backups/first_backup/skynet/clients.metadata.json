@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":1,"key":{"_id":1},"name":"_id_","ns":"skynet.clients"},{"v":1,"unique":true,"key":{"number":1},"name":"number_1","ns":"skynet.clients","background":true},{"v":1,"unique":true,"key":{"dni":1},"name":"dni_1","ns":"skynet.clients","background":true}]}

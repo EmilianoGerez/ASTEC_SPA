@@ -11,6 +11,8 @@ router.put('/:id', userController.isAuth, controller.update);
 router.get('/:id', userController.isAuth, controller.findOne);
 // list pendig orders
 router.get('/', userController.isAuth, controller.findAll);
+// all orders {paginated}
+router.get('/vieworders/:year/month/:startMonth/:endMonth', userController.isAuth, controller.viewOrders);
 // remove
 router.delete('/:id', userController.isAuth, controller.remove);
 // remove

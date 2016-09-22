@@ -15,6 +15,21 @@ function OrderCtrl(Orders, Clients, Users, $http, $window, $stateParams) {
   vm.orderStatus = ['Cancelada', 'Asignada', 'Completada'];
   vm.selectedTech = '';
 
+  // view orders declarations
+  vm.yearsRange = [];
+  vm.selectedYear = new Date().getFullYear();;
+  vm.startMonth;
+  vm.addEndMonth;
+  vm.endMonth;
+  vm.orderListRange = [];
+  // calculate year range
+  var range = [];
+  range.push(vm.selectedYear);
+  for (var i = 1; i < 30; i++) {
+    range.push(vm.selectedYear - i);
+  }
+  vm.yearsRange = range;
+
   vm.create = function(form) {
     // asing attr
     vm.orderModel.client = vm.clientData._id;
@@ -119,6 +134,32 @@ function OrderCtrl(Orders, Clients, Users, $http, $window, $stateParams) {
         return e.role === 'Tech';
       });
     });
+  };
+
+  vm.getOrders = function() {
+    // sets
+    vm.ordersLoading = true;
+    var endMonth = null;
+
+    //resets
+    vm.orderMessage = '';
+    vm.orderListRange = [];
+
+    if (vm.addEndMonth) {
+      endMonth = vm.endMonth;
+    }
+
+    Orders.findOrders(vm.selectedYear, vm.startMonth, endMonth)
+      .then(function(response) {
+        vm.ordersLoading = false;
+        vm.orderListRange = response.data;
+        if (response.data.length == 0) {
+          vm.orderMessage = "No se encontraron ordenes"
+        }
+      }, function(err) {
+        vm.orderMessage = "Se ha producido un error";
+        console.log(err);
+      });
   };
 
   // functon helpers (private)
